@@ -1,4 +1,4 @@
-package tests.favoritesTests;
+package tests.flatSearchUiTests;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
