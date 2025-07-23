@@ -1,191 +1,186 @@
 package pages;
 
 import com.codeborne.selenide.SelenideElement;
-import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
 
-/**
- * Page Object для компонента поиска и фильтрации на странице TrendRealty
- * Содержит все интерактивные элементы из блока filter-search-box
- */
 public class FilterSearchPage {
 
-    // Основной контейнер поиска
+    // Константы для локаторов
+    private static final String SEARCH_INPUT_LOCATOR = "input[name='filter-search']";
+    private static final String CLEAR_BUTTON_LOCATOR = ".field__clear button";
+    private static final String DISTRICT_BUTTON_LOCATOR = ".location-controls .btn-wrapper:first-child button";
+    private static final String METRO_BUTTON_LOCATOR = ".location-controls .btn-wrapper:last-child button";
+    private static final String ROOMS_SELECT_LOCATOR = "div.rooms[role='select']";
+    private static final String PRICE_SELECT_LOCATOR = "div.price[role='select']";
+    private static final String DEADLINE_SELECT_LOCATOR = "div.deadline[role='select']";
+
+    // Основной контейнер фильтра поиска
     private final SelenideElement filterSearchBox = $(".filter-search-box");
 
-    // Поле поиска
-    private final SelenideElement searchField = $("input[name='filter-search']");
+    // Поле поиска и связанные элементы
+    private final SelenideElement searchField = $(SEARCH_INPUT_LOCATOR);
     private final SelenideElement searchIcon = $(".field__icon_before svg");
-    private final SelenideElement clearSearchButton = $(".field__clear button");
+    private final SelenideElement clearSearchButton = $(CLEAR_BUTTON_LOCATOR);
 
     // Кнопки локации
-    private final SelenideElement districtButton = $(".location-controls button:has(span:contains('Район'))");
-    private final SelenideElement metroButton = $(".location-controls button:has(span:contains('Метро'))");
+    private final SelenideElement districtButton = $(DISTRICT_BUTTON_LOCATOR);
+    private final SelenideElement metroButton = $(METRO_BUTTON_LOCATOR);
 
     // Селект количества комнат
-    private final SelenideElement roomsSelect = $("div.rooms[role='select']");
+    private final SelenideElement roomsSelect = $(ROOMS_SELECT_LOCATOR);
     private final SelenideElement roomsHiddenInput = $("input[name='room']");
     private final SelenideElement roomsPlaceholder = $(".rooms .select__placeholder");
     private final SelenideElement roomsDropdownIcon = $(".rooms .select__icon-down");
 
     // Селект цены
-    private final SelenideElement priceSelect = $("div.price[role='select']");
+    private final SelenideElement priceSelect = $(PRICE_SELECT_LOCATOR);
     private final SelenideElement priceHiddenInput = $("input[name='price']");
     private final SelenideElement pricePlaceholder = $(".price .range-select__placeholder");
     private final SelenideElement priceDropdownIcon = $(".price .range-select__icon-down");
 
     // Селект срока сдачи
-    private final SelenideElement deadlineSelect = $("div.deadline[role='select']");
+    private final SelenideElement deadlineSelect = $(DEADLINE_SELECT_LOCATOR);
     private final SelenideElement deadlineHiddenInput = $("input[name='deadline']");
     private final SelenideElement deadlinePlaceholder = $(".deadline .select__placeholder");
     private final SelenideElement deadlineDropdownIcon = $(".deadline .select__icon-down");
 
-    // Методы для работы с поиском
+    // Нижняя часть фильтра (filter__bottom)
+    private final SelenideElement filterBottom = $(".filter__bottom");
+    private final SelenideElement filterTags = $(".filter__tags");
+    private final SelenideElement filterControls = $(".filter__controls");
 
-    @Step("Ввести текст в поле поиска: {searchText}")
-    public FilterSearchPage enterSearchText(String searchText) {
-        searchField.setValue(searchText);
-        return this;
-    }
+    // Кнопка "Все фильтры"
+    private final SelenideElement allFiltersButton = $(".filter__open-extend button");
+    private final SelenideElement allFiltersIcon = $(".filter__open-extend svg");
+    private final SelenideElement allFiltersText = $(".filter__open-extend span");
 
-    @Step("Очистить поле поиска")
-    public FilterSearchPage clearSearch() {
-        clearSearchButton.click();
-        return this;
-    }
+    // Кнопка "На карте"
+    private final SelenideElement onMapButton = $(".filter__on-map a");
+    private final SelenideElement onMapIcon = $(".filter__on-map svg");
+    private final SelenideElement onMapText = $(".filter__on-map span");
 
-    @Step("Получить текст из поля поиска")
-    public String getSearchText() {
-        return searchField.getValue();
-    }
+    // Кнопка "Показать квартиры"
+    private final SelenideElement showApartmentsButton = $(".filter__apply a");
+    private final SelenideElement showApartmentsText = $(".filter__apply span");
 
-    @Step("Проверить, что поле поиска пустое")
-    public boolean isSearchFieldEmpty() {
-        return searchField.getValue().isEmpty();
-    }
+    // Геттеры для доступа к элементам верхней части фильтра
 
-    // Методы для работы с кнопками локации
-
-    @Step("Нажать на кнопку 'Район'")
-    public FilterSearchPage clickDistrictButton() {
-        districtButton.click();
-        return this;
-    }
-
-    @Step("Нажать на кнопку 'Метро'")
-    public FilterSearchPage clickMetroButton() {
-        metroButton.click();
-        return this;
-    }
-
-    // Методы для работы с селектом количества комнат
-
-    @Step("Открыть селект количества комнат")
-    public FilterSearchPage openRoomsSelect() {
-        roomsSelect.click();
-        return this;
-    }
-
-    @Step("Получить значение селекта количества комнат")
-    public String getRoomsValue() {
-        return roomsHiddenInput.getValue();
-    }
-
-    @Step("Проверить текст плейсхолдера количества комнат")
-    public String getRoomsPlaceholder() {
-        return roomsPlaceholder.text();
-    }
-
-    // Методы для работы с селектом цены
-
-    @Step("Открыть селект цены")
-    public FilterSearchPage openPriceSelect() {
-        priceSelect.click();
-        return this;
-    }
-
-    @Step("Получить значение селекта цены")
-    public String getPriceValue() {
-        return priceHiddenInput.getValue();
-    }
-
-    @Step("Проверить текст плейсхолдера цены")
-    public String getPricePlaceholder() {
-        return pricePlaceholder.text();
-    }
-
-    // Методы для работы с селектом срока сдачи
-
-    @Step("Открыть селект срока сдачи")
-    public FilterSearchPage openDeadlineSelect() {
-        deadlineSelect.click();
-        return this;
-    }
-
-    @Step("Получить значение селекта срока сдачи")
-    public String getDeadlineValue() {
-        return deadlineHiddenInput.getValue();
-    }
-
-    @Step("Проверить текст плейсхолдера срока сдачи")
-    public String getDeadlinePlaceholder() {
-        return deadlinePlaceholder.text();
-    }
-
-    // Методы проверки видимости элементов
-
-    @Step("Проверить, что поле поиска отображается")
-    public boolean isSearchFieldDisplayed() {
-        return searchField.isDisplayed();
-    }
-
-    @Step("Проверить, что кнопка очистки поиска отображается")
-    public boolean isClearButtonDisplayed() {
-        return clearSearchButton.isDisplayed();
-    }
-
-    @Step("Проверить, что кнопка 'Район' отображается")
-    public boolean isDistrictButtonDisplayed() {
-        return districtButton.isDisplayed();
-    }
-
-    @Step("Проверить, что кнопка 'Метро' отображается")
-    public boolean isMetroButtonDisplayed() {
-        return metroButton.isDisplayed();
-    }
-
-    @Step("Проверить, что селект количества комнат отображается")
-    public boolean isRoomsSelectDisplayed() {
-        return roomsSelect.isDisplayed();
-    }
-
-    @Step("Проверить, что селект цены отображается")
-    public boolean isPriceSelectDisplayed() {
-        return priceSelect.isDisplayed();
-    }
-
-    @Step("Проверить, что селект срока сдачи отображается")
-    public boolean isDeadlineSelectDisplayed() {
-        return deadlineSelect.isDisplayed();
-    }
-
-    // Дополнительные методы для взаимодействия
-
-    @Step("Проверить, что все основные элементы фильтра отображаются")
-    public boolean areAllFilterElementsDisplayed() {
-        return filterSearchBox.isDisplayed() &&
-                isSearchFieldDisplayed() &&
-                isDistrictButtonDisplayed() &&
-                isMetroButtonDisplayed() &&
-                isRoomsSelectDisplayed() &&
-                isPriceSelectDisplayed() &&
-                isDeadlineSelectDisplayed();
-    }
-
-    @Step("Получить контейнер фильтра поиска")
     public SelenideElement getFilterSearchBox() {
         return filterSearchBox;
+    }
+
+    public SelenideElement getSearchField() {
+        return searchField;
+    }
+
+    public SelenideElement getSearchIcon() {
+        return searchIcon;
+    }
+
+    public SelenideElement getClearSearchButton() {
+        return clearSearchButton;
+    }
+
+    public SelenideElement getDistrictButton() {
+        return districtButton;
+    }
+
+    public SelenideElement getMetroButton() {
+        return metroButton;
+    }
+
+    public SelenideElement getRoomsSelect() {
+        return roomsSelect;
+    }
+
+    public SelenideElement getRoomsHiddenInput() {
+        return roomsHiddenInput;
+    }
+
+    public SelenideElement getRoomsPlaceholder() {
+        return roomsPlaceholder;
+    }
+
+    public SelenideElement getRoomsDropdownIcon() {
+        return roomsDropdownIcon;
+    }
+
+    public SelenideElement getPriceSelect() {
+        return priceSelect;
+    }
+
+    public SelenideElement getPriceHiddenInput() {
+        return priceHiddenInput;
+    }
+
+    public SelenideElement getPricePlaceholder() {
+        return pricePlaceholder;
+    }
+
+    public SelenideElement getPriceDropdownIcon() {
+        return priceDropdownIcon;
+    }
+
+    public SelenideElement getDeadlineSelect() {
+        return deadlineSelect;
+    }
+
+    public SelenideElement getDeadlineHiddenInput() {
+        return deadlineHiddenInput;
+    }
+
+    public SelenideElement getDeadlinePlaceholder() {
+        return deadlinePlaceholder;
+    }
+
+    public SelenideElement getDeadlineDropdownIcon() {
+        return deadlineDropdownIcon;
+    }
+
+    // Геттеры для доступа к элементам нижней части фильтра
+
+    public SelenideElement getFilterBottom() {
+        return filterBottom;
+    }
+
+    public SelenideElement getFilterTags() {
+        return filterTags;
+    }
+
+    public SelenideElement getFilterControls() {
+        return filterControls;
+    }
+
+    public SelenideElement getAllFiltersButton() {
+        return allFiltersButton;
+    }
+
+    public SelenideElement getAllFiltersIcon() {
+        return allFiltersIcon;
+    }
+
+    public SelenideElement getAllFiltersText() {
+        return allFiltersText;
+    }
+
+    public SelenideElement getOnMapButton() {
+        return onMapButton;
+    }
+
+    public SelenideElement getOnMapIcon() {
+        return onMapIcon;
+    }
+
+    public SelenideElement getOnMapText() {
+        return onMapText;
+    }
+
+    public SelenideElement getShowApartmentsButton() {
+        return showApartmentsButton;
+    }
+
+    public SelenideElement getShowApartmentsText() {
+        return showApartmentsText;
     }
 }

@@ -55,6 +55,6 @@ tasks.withType(Test) {
 }
 task test_run (type: Test) {
     useJUnitPlatform {
-        includeTags("Smoke")
+     //   includeTags("Smoke")
     }
 }
