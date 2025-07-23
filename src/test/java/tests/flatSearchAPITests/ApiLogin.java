@@ -9,10 +9,10 @@ public class ApiLogin {
     @Test
     void loginApiTest() {
         given()
-                .post("https://sso-api.trendagent.ru/v1/login");
-        then().
-
-
+                .when()
+                .post("https://sso-api.trendagent.ru/v1/login")
+                .then()
+                .statusCode(400); // Ожидаем 400 так как нет данных авторизации
     }
 
 
