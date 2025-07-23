@@ -1,38 +1,26 @@
 package tests;
 
-import com.codeborne.selenide.Configuration;
+import helpers.CookieManager;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.FilterSearchPage;
 
-import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Feature("Фильтр поиска недвижимости")
 @DisplayName("Тесты компонента поиска и фильтрации на TrendRealty")
-public class FilterSearchTest {
+public class FilterSearchTest extends BaseTest {
 
-    private FilterSearchPage filterSearchPage = new FilterSearchPage();
-
-    @BeforeAll
-    static void setUp() {
-        Configuration.browser = "chrome";
-        Configuration.headless = false;
-        Configuration.browserSize = "1920x1080";
-        Configuration.timeout = 10000;
-    }
+    private final FilterSearchPage filterSearchPage = new FilterSearchPage();
 
     @Test
     @Story("Поиск недвижимости")
     @DisplayName("Проверка ввода текста в поле поиска")
     @Description("Тест проверяет возможность ввода текста в поле поиска и его получения")
     void testSearchFieldInput() {
-        open("https://trendrealty.ru/");
-        
         String searchText = "ЖК Московский";
         
         filterSearchPage.enterSearchText(searchText);
@@ -46,8 +34,6 @@ public class FilterSearchTest {
     @DisplayName("Проверка очистки поля поиска")
     @Description("Тест проверяет функциональность кнопки очистки поля поиска")
     void testClearSearchField() {
-        open("https://trendrealty.ru/");
-        
         String searchText = "Тестовый текст";
         
         filterSearchPage.enterSearchText(searchText)
@@ -62,8 +48,6 @@ public class FilterSearchTest {
     @DisplayName("Проверка кнопок локации")
     @Description("Тест проверяет отображение и кликабельность кнопок 'Район' и 'Метро'")
     void testLocationButtons() {
-        open("https://trendrealty.ru/");
-        
         assertTrue(filterSearchPage.isDistrictButtonDisplayed(), 
                 "Кнопка 'Район' должна отображаться");
         assertTrue(filterSearchPage.isMetroButtonDisplayed(), 
@@ -81,8 +65,6 @@ public class FilterSearchTest {
     @DisplayName("Проверка селектов фильтров")
     @Description("Тест проверяет отображение и функциональность селектов количества комнат, цены и срока сдачи")
     void testFilterSelects() {
-        open("https://trendrealty.ru/");
-        
         // Проверяем отображение всех селектов
         assertTrue(filterSearchPage.isRoomsSelectDisplayed(), 
                 "Селект количества комнат должен отображаться");
@@ -113,8 +95,6 @@ public class FilterSearchTest {
     @DisplayName("Проверка отображения всех элементов фильтра")
     @Description("Тест проверяет, что все основные элементы компонента фильтра отображаются корректно")
     void testAllFilterElementsDisplayed() {
-        open("https://trendrealty.ru/");
-        
         assertTrue(filterSearchPage.areAllFilterElementsDisplayed(), 
                 "Все основные элементы фильтра должны отображаться");
     }
@@ -124,8 +104,6 @@ public class FilterSearchTest {
     @DisplayName("Проверка поиска с различными типами данных")
     @Description("Тест проверяет ввод различных типов поисковых запросов")
     void testSearchWithDifferentInputTypes() {
-        open("https://trendrealty.ru/");
-        
         // Тест поиска по названию ЖК
         String complexName = "ЖК Солнечный";
         filterSearchPage.enterSearchText(complexName);
@@ -144,5 +122,29 @@ public class FilterSearchTest {
         String developerName = "ПИК";
         filterSearchPage.enterSearchText(developerName);
         assertEquals(developerName, filterSearchPage.getSearchText());
+    }
+
+    @Test
+    @Story("Управление cookies")
+    @DisplayName("Проверка установки cookie города")
+    @Description("Тест проверяет, что cookie города устанавливается корректно")
+    void testCityCookieManagement() {
+        // Проверяем, что cookie установлена
+        assertTrue(CookieManager.isSelectedCityCookieSet(), 
+                "Cookie выбранного города должна быть установлена");
+        
+        // Проверяем значение cookie по умолчанию
+        assertEquals(CookieManager.CityIds.MOSCOW, CookieManager.getSelectedCityCookieValue(), 
+                "Cookie должна содержать ID Москвы по умолчанию");
+        
+        // Тестируем установку другого города
+        CookieManager.CityIds.setSPbCookie();
+        assertEquals(CookieManager.CityIds.SPB, CookieManager.getSelectedCityCookieValue(), 
+                "Cookie должна содержать ID Санкт-Петербурга");
+        
+        // Восстанавливаем cookie по умолчанию
+        CookieManager.setDefaultCityCookie();
+        assertEquals(CookieManager.CityIds.MOSCOW, CookieManager.getSelectedCityCookieValue(), 
+                "Cookie должна быть восстановлена на Москву");
     }
 }
