@@ -11,16 +11,16 @@ import static io.qameta.allure.Allure.step;
 public class LoginTest {
 
     @Test
-    @Tag("Smoke execution")
+    @Tag("Smoke")
     void loginApiTest() {
         LoginBodyModel testData = LoginBodyModel.createTestData();
 
         Response authResponse = step("API авторизация", () -> {
             return given()
                     .spec(LoginResponse.loginRequestSpec)
-                    .formParam("phone", testData.phone)      // ✅ Прямой доступ к полям
-                    .formParam("password", testData.password) // ✅ Прямой доступ к полям
-                    .formParam("client", testData.client)     // ✅ Прямой доступ к полям
+                    .formParam("phone", testData.phone)
+                    .formParam("password", testData.password)
+                    .formParam("client", testData.client)
                     .when()
                     .post("/login")
                     .then()

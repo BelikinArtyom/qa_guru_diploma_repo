@@ -8,32 +8,6 @@ public class LoginBodyModel {
     public String password;
     public String client = "web";
 
-    // Явные геттеры
-    public String getPhone() {
-        return phone;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getClient() {
-        return client;
-    }
-
-    // Явные сеттеры
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setClient(String client) {
-        this.client = client;
-    }
-
     public static LoginBodyModel createTestData() {
         LoginBodyModel model = new LoginBodyModel();
         model.phone = "+79215711724";
@@ -41,5 +15,12 @@ public class LoginBodyModel {
         model.client = "web";
         return model;
     }
-}
 
+    // ✅ Метод для создания form-data
+    public static io.restassured.specification.RequestSpecification createFormData(LoginBodyModel model) {
+        return io.restassured.RestAssured.given()
+                .formParam("phone", model.phone)
+                .formParam("password", model.password)
+                .formParam("client", model.client);
+    }
+}
