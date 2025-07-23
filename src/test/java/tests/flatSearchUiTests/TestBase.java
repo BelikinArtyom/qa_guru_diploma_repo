@@ -26,7 +26,7 @@ public class TestBase {
         Configuration.browserVersion = browserVersion;
         Configuration.browserSize = BROWSER_SIZE;
 
-        Configuration.baseUrl = "https://spb.trendagent.ru/";
+        Configuration.baseUrl = "https://trendrealty.ru/";
         Configuration.pageLoadStrategy = "eager";
         Configuration.remote = String.format("https://%s:%s@%s/wd/hub",
                 selenoidLogin,
@@ -41,6 +41,6 @@ public class TestBase {
         Configuration.browserCapabilities = capabilities;
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
 
-        RestAssured.baseURI = "https://api.trendagent.ru/";
+        RestAssured.baseURI = "https://api.trendrealty.ru/";
     }
 }
