@@ -7,7 +7,7 @@ import static helpers.CustomAllureListener.withCustomTemplates;
 import static io.restassured.RestAssured.with;
 import static io.restassured.filter.log.LogDetail.BODY;
 import static io.restassured.filter.log.LogDetail.STATUS;
-import static io.restassured.http.ContentType.JSON;
+import static io.restassured.http.ContentType.URLENC;  // ✅ Изменяем на URLENC
 
 public class LoginResponse {
 
@@ -16,7 +16,7 @@ public class LoginResponse {
             .log().uri()
             .log().body()
             .log().headers()
-            .contentType(JSON)
+            .contentType(URLENC)  // ✅ Используем URLENC для form-data
             .baseUri("https://sso-api.trendagent.ru")
             .basePath("/v1");
 

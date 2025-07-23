@@ -1,22 +1,26 @@
 package tests.flatSearchAPITests;
 
 import io.restassured.response.Response;
-import models.LoginModel;
-import specs.LoginResponse;
+import json.models.LoginBodyModel;
+import json.specs.LoginResponse;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 import static io.qameta.allure.Allure.step;
 
-public class LoginTest extends TestBase {
+public class LoginTest {
 
     @Test
+    @Tag("Smoke execution")
     void loginApiTest() {
-        LoginModel testData = LoginModel.createTestData();
+        LoginBodyModel testData = LoginBodyModel.createTestData();
 
         Response authResponse = step("API авторизация", () -> {
             return given()
                     .spec(LoginResponse.loginRequestSpec)
-                    .body(testData)
+                    .formParam("phone", testData.phone)      // ✅ Прямой доступ к полям
+                    .formParam("password", testData.password) // ✅ Прямой доступ к полям
+                    .formParam("client", testData.client)     // ✅ Прямой доступ к полям
                     .when()
                     .post("/login")
                     .then()
