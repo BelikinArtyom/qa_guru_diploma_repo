@@ -30,7 +30,7 @@ public class FilterSearchTest extends TestBase {
                     .setMetro(FilterSearchPage.METRO_ADMIRALTY)
                     .setRooms(FilterSearchPage.ROOMS_2)
                     .setPriceRange(FilterSearchPage.PRICE_FROM, FilterSearchPage.PRICE_TO)
-                    .setDeadline(FilterSearchPage.DEADLINE_2027);
+                    .setDeadline(FilterSearchPage.DEADLINE);
 
             assertTrue(filterSearchPage.checkFilterTags(),
                     "Все выбранные значения фильтров должны отображаться в виде тегов");
@@ -66,7 +66,7 @@ public class FilterSearchTest extends TestBase {
                     .setMetro(FilterSearchPage.METRO_ADMIRALTY)
                     .setRooms(FilterSearchPage.ROOMS_2)
                     .setPriceRange(FilterSearchPage.PRICE_FROM, FilterSearchPage.PRICE_TO)
-                    .setDeadline(FilterSearchPage.DEADLINE_2027);
+                    .setDeadline(FilterSearchPage.DEADLINE);
 
             assertTrue(filterSearchPage.checkFilterTags(),
                     "Все выбранные значения фильтров должны отображаться в виде тегов");
@@ -93,6 +93,26 @@ public class FilterSearchTest extends TestBase {
             filterSearchPage.clearSearch();
             assertTrue(filterSearchPage.isSearchFieldEmpty(),
                     "После нажатия на кнопку очистки поле поиска должно быть пустым");
+        });
+    }
+
+    @Test
+    @Story("Фильтрация недвижимости")
+    @DisplayName("Проверка отображения установленных значений фильтров")
+    @Description("Тест проверяет установку значений в фильтрах и соответствие отображаемого текста установленным значениям")
+    void testFilterValuesDisplay() {
+        io.qameta.allure.Allure.step("Выполнение теста проверки отображения значений фильтров", () -> {
+            open(baseUrl);
+            cookieManager.setCityForTest();
+
+            filterSearchPage.setRooms(FilterSearchPage.ROOMS_2)
+                    .setPriceRange(FilterSearchPage.PRICE_FROM, FilterSearchPage.PRICE_TO)
+                    .setDeadline(FilterSearchPage.DEADLINE);
+
+            assertTrue(filterSearchPage.getRoomsPlaceholder().equals("2-комнатная") &&
+                    filterSearchPage.getPricePlaceholder().equals("от Цена от, ₽ 10 000 000 до Цена до, ₽ 20 000 000 ₽") &&
+                    filterSearchPage.getDeadlinePlaceholder().equals("до 2027 г."),
+                    "Отображаемые тексты в фильтрах должны точно соответствовать установленным значениям");
         });
     }
 }

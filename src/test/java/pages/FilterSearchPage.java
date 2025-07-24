@@ -84,7 +84,7 @@ public class FilterSearchPage {
     }
 
     public String getRoomsPlaceholder() {
-        return roomsPlaceholder.text();
+        return $(".field-wrapper.select.rooms .field__element span").text();
     }
 
     // Методы для работы с селектом цены
@@ -99,7 +99,7 @@ public class FilterSearchPage {
     }
 
     public String getPricePlaceholder() {
-        return pricePlaceholder.text();
+        return $(".field-wrapper.range-select.price .field__element span").text();
     }
 
     // Методы для работы с селектом срока сдачи
@@ -114,7 +114,7 @@ public class FilterSearchPage {
     }
 
     public String getDeadlinePlaceholder() {
-        return deadlinePlaceholder.text();
+        return $(".field-wrapper.select.deadline .field__element span").text();
     }
 
     // Методы для установки значений фильтров
@@ -146,7 +146,7 @@ public class FilterSearchPage {
 
     public FilterSearchPage setRooms(String rooms) {
         openRoomsSelect();
-        $$(".dropdown__list .dropdown-item").get(4).click();
+        $$(".dropdown-item").findBy(text(rooms)).click();
         $("body").click();
         return this;
     }
@@ -162,8 +162,14 @@ public class FilterSearchPage {
 
     public FilterSearchPage setDeadline(String deadline) {
         openDeadlineSelect();
-        $$(".dropdown__list .dropdown-item").get(0).click();
+        $$(".dropdown-item").get(3).click();
         $("body").click();
+        return this;
+    }
+
+    public FilterSearchPage setDeadlineForFilter(String deadline) {
+        openDeadlineSelect();
+        $$(".dropdown-item").get(3).click();
         return this;
     }
 
@@ -303,7 +309,7 @@ public class FilterSearchPage {
     public static final String ROOMS_2 = "2-комнатная";
     public static final String PRICE_FROM = "10000000";
     public static final String PRICE_TO = "20000000";
-    public static final String DEADLINE_2027 = "до 2027г.";
+    public static final String DEADLINE = "до 2027 г.";
     public static final String TEST_SEARCH_TEXT = "Тестовый ЖК";
 
     public java.util.List<String> getExpectedAdmiraltyTags() {
