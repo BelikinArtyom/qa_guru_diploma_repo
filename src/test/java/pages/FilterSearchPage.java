@@ -364,6 +364,7 @@ public class FilterSearchPage {
     public static final String PRICE_FROM = "10000000";
     public static final String PRICE_TO = "20000000";
     public static final String DEADLINE_2027 = "до 2027г.";
+    public static final String TEST_SEARCH_TEXT = "Тестовый ЖК";
 
     @Step("Получить ожидаемые теги для фильтров Адмиралтейского района")
     public java.util.List<String> getExpectedAdmiraltyTags() {

@@ -76,4 +76,23 @@ public class FilterSearchTest extends TestBase {
                     "После нажатия 'Сбросить все' теги должны отсутствовать");
         });
     }
+
+    @Test
+    @Story("Поиск недвижимости")
+    @DisplayName("Проверка ввода текста в поле поиска и его очистки")
+    @Description("Тест проверяет возможность ввода текста в поле поиска, его получения и очистки через кнопку крестика")
+    void testSearchFieldClear() {
+        io.qameta.allure.Allure.step("Выполнение теста очистки поля поиска", () -> {
+            open(baseUrl);
+            cookieManager.setCityForTest();
+
+            filterSearchPage.enterSearchText(FilterSearchPage.TEST_SEARCH_TEXT);
+            assertEquals(FilterSearchPage.TEST_SEARCH_TEXT, filterSearchPage.getSearchText(),
+                    "Введенный текст должен соответствовать полученному из поля поиска");
+
+            filterSearchPage.clearSearch();
+            assertTrue(filterSearchPage.isSearchFieldEmpty(),
+                    "После нажатия на кнопку очистки поле поиска должно быть пустым");
+        });
+    }
 }
