@@ -7,9 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.FilterSearchPage;
 
-
-
-
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,13 +16,6 @@ public class FilterSearchTest extends TestBase {
 
     private final FilterSearchPage filterSearchPage = new FilterSearchPage();
     private final CookieManager cookieManager = new CookieManager();
-
-
-
-
-    
-
-  
 
     @Test
     @Story("Фильтрация недвижимости")

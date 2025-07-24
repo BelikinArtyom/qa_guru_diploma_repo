@@ -7,6 +7,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.empty;
 
 public class FilterSearchPage {
 
@@ -338,8 +339,23 @@ public class FilterSearchPage {
 
     @Step("Проверить, что теги отсутствуют")
     public boolean areTagsEmpty() {
-        return getFilterTags().isEmpty();
+        // Проверяем, что элемент .filter__tags не содержит дочерних элементов
+        return $$(".filter__tags .tag").size() == 0;
     }
+
+    @Step("Проверить отсутствие тегов через Selenide shouldHave")
+    public FilterSearchPage shouldHaveNoTags() {
+        $(".filter__tags").shouldHave(empty);
+        return this;
+    }
+
+    @Step("Проверить отсутствие тегов через Selenide shouldNotHave")
+    public FilterSearchPage shouldNotHaveAnyTags() {
+        $(".filter__tags").shouldNotHave(text("2-комнатная"));
+        $(".filter__tags").shouldNotHave(text("м. Адмиралтейская"));
+        return this;
+    }
+
 
     // Константы для тестовых данных
     public static final String DISTRICT_ADMIRALTY = "Адмиралтейский";
