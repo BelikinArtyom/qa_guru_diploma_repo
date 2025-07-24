@@ -240,13 +240,6 @@ public class FilterSearchPage {
         for (String tag : tags) {
             System.out.println("  - " + tag);
         }
-        
-        // Дополнительная отладка - проверим все элементы с классом tag
-        System.out.println("Все элементы с классом 'tag':");
-        System.out.println("  .filter__bottom .tag: " + $$(".filter__bottom .tag").size());
-        System.out.println("  .filter-tags .tag: " + $$(".filter-tags .tag").size());
-        System.out.println("  .tag: " + $$(".tag").size());
-        System.out.println("  [class*='tag']: " + $$("[class*='tag']").size());
     }
 
     // Методы проверки видимости элементов
@@ -333,6 +326,19 @@ public class FilterSearchPage {
     public boolean checkFilterTags() {
         java.util.List<String> expectedTags = getExpectedAdmiraltyTags();
         return hasAllExpectedTags(expectedTags);
+    }
+
+    @Step("Нажать кнопку 'Сбросить все'")
+    public FilterSearchPage clickResetAllButton() {
+      
+            $(".chips__delete-all button").click();
+            return this;
+        
+    }
+
+    @Step("Проверить, что теги отсутствуют")
+    public boolean areTagsEmpty() {
+        return getFilterTags().isEmpty();
     }
 
     // Константы для тестовых данных

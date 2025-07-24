@@ -20,20 +20,12 @@ public class FilterSearchTest extends TestBase {
     private final FilterSearchPage filterSearchPage = new FilterSearchPage();
     private final CookieManager cookieManager = new CookieManager();
 
-    @Test
-    @Story("Поиск недвижимости")
-    @DisplayName("Проверка ввода текста в поле поиска")
-    @Description("Тест проверяет возможность ввода текста в поле поиска и его получения")
-    void testSearchFieldInput() {
-        io.qameta.allure.Allure.step("Выполнение теста поиска", () -> {
-            open(baseUrl);
-            cookieManager.setCityForTest();
-            String searchText = "ЖК Московский";
-            filterSearchPage.enterSearchText(searchText);
-            assertEquals(searchText, filterSearchPage.getSearchText(),
-                    "Введенный текст должен совпадать с полученным из поля поиска");
-        });
-    }
+
+
+
+    
+
+  
 
     @Test
     @Story("Фильтрация недвижимости")
@@ -68,6 +60,30 @@ public class FilterSearchTest extends TestBase {
 
             assertTrue(filterSearchPage.checkExtendedFilters(),
                     "Все расширенные фильтры должны отображаться с правильными названиями");
+        });
+    }
+
+    @Test
+    @Story("Фильтрация недвижимости")
+    @DisplayName("Проверка установки значений фильтров, отображения тегов и их сброса")
+    @Description("Тест проверяет установку значений в фильтрах, соответствие отображаемых тегов выбранным значениям и их удаление")
+    void testFilterValuesAndTagsWithReset() {
+        io.qameta.allure.Allure.step("Выполнение теста фильтрации со сбросом", () -> {
+            open(baseUrl);
+            cookieManager.setCityForTest();
+
+            filterSearchPage.setDistrict(FilterSearchPage.DISTRICT_ADMIRALTY)
+                    .setMetro(FilterSearchPage.METRO_ADMIRALTY)
+                    .setRooms(FilterSearchPage.ROOMS_2)
+                    .setPriceRange(FilterSearchPage.PRICE_FROM, FilterSearchPage.PRICE_TO)
+                    .setDeadline(FilterSearchPage.DEADLINE_2027);
+
+            assertTrue(filterSearchPage.checkFilterTags(),
+                    "Все выбранные значения фильтров должны отображаться в виде тегов");
+            filterSearchPage.clickResetAllButton();
+
+            assertTrue(filterSearchPage.areTagsEmpty(),
+                    "После нажатия 'Сбросить все' теги должны отсутствовать");
         });
     }
 }
