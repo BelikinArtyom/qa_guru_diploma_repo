@@ -115,4 +115,29 @@ public class FilterSearchTest extends TestBase {
                     "Отображаемые тексты в фильтрах должны точно соответствовать установленным значениям");
         });
     }
+
+    @Test
+    @Story("Фильтрация недвижимости")
+    @DisplayName("Проверка установки значений фильтров, отображения тегов и их удаления по одному")
+    @Description("Тест проверяет установку значений в фильтрах, соответствие отображаемых тегов выбранным значениям и их удаление по одному")
+    void testFilterValuesAndTagsWithIndividualReset() {
+        io.qameta.allure.Allure.step("Выполнение теста фильтрации с удалением тегов по одному", () -> {
+            open(baseUrl);
+            cookieManager.setCityForTest();
+
+            filterSearchPage.setDistrict(FilterSearchPage.DISTRICT_ADMIRALTY)
+                    .setMetro(FilterSearchPage.METRO_ADMIRALTY)
+                    .setRooms(FilterSearchPage.ROOMS_2)
+                    .setPriceRange(FilterSearchPage.PRICE_FROM, FilterSearchPage.PRICE_TO)
+                    .setDeadline(FilterSearchPage.DEADLINE);
+
+            assertTrue(filterSearchPage.checkFilterTags(),
+                    "Все выбранные значения фильтров должны отображаться в виде тегов");
+            
+            filterSearchPage.removeAllTagsIndividually();
+
+            assertTrue(filterSearchPage.areTagsEmpty(),
+                    "После удаления всех тегов по одному теги должны отсутствовать");
+        });
+    }
 }

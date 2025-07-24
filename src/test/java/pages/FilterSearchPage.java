@@ -287,6 +287,13 @@ public class FilterSearchPage {
         return this;
     }
 
+    public FilterSearchPage removeAllTagsIndividually() {
+        while ($$(".chips__item .chips__delete .btn_clear").size() > 0) {
+            $(".chips__item .chips__delete .btn_clear").click();
+        }
+        return this;
+    }
+
     public boolean areTagsEmpty() {
         return $$(".filter__tags .tag").size() == 0;
     }
