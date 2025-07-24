@@ -140,10 +140,8 @@ public class FilterSearchPage {
     public FilterSearchPage setDistrict(String district) {
         clickDistrictButton();
         
-        // Вводим название района в поле поиска
         $("input[placeholder='Поиск по названию']").setValue(district);
         
-        // Кликаем по подсказке с нужным названием
         $$(".dropdown__list").get(0).click();
         
         return this;
@@ -152,16 +150,12 @@ public class FilterSearchPage {
 
     @Step("Установить метро: {metro}")
     public FilterSearchPage setMetro(String metro) {
-        // Переходим в таб метро
         $$("button.btn_ghost").findBy(text("Метро")).click();
 
-        // Вводим название метро в поле поиска (точный локатор)
         $(".filter-search__field input.text-field__element[placeholder='Поиск по названию']").setValue(metro);
 
-        // Кликаем по подсказке с нужным названием
         $(".filter-search-suggestion-label__name").click();
 
-        // Закрываем модалку
         $(".modal-header__close").click();
 
         return this;
@@ -171,9 +165,7 @@ public class FilterSearchPage {
     @Step("Установить количество комнат: {rooms}")
     public FilterSearchPage setRooms(String rooms) {
         openRoomsSelect();
-        // Выбираем "2-комнатная" (5-й элемент в списке)
         $$(".dropdown__list .dropdown-item").get(4).click();
-        // Закрываем выпадающий список кликом по пустому месту
         $("body").click();
         return this;
     }
@@ -183,9 +175,7 @@ public class FilterSearchPage {
         openPriceSelect();
         $("input[placeholder*='от']").setValue(priceFrom);
         $("input[placeholder*='до']").setValue(priceTo);
-        // Кнопка подтверждения цены
      
-        // Закрываем выпадающий список кликом по пустому месту
         $("body").click();
         return this;
     }
@@ -193,9 +183,7 @@ public class FilterSearchPage {
     @Step("Установить срок сдачи: {deadline}")
     public FilterSearchPage setDeadline(String deadline) {
         openDeadlineSelect();
-        // Выбираем первый элемент в списке сроков сдачи
         $$(".dropdown__list .dropdown-item").get(0).click();
-        // Закрываем выпадающий список кликом по пустому месту
         $("body").click();
         return this;
     }
@@ -204,7 +192,6 @@ public class FilterSearchPage {
 
     @Step("Получить все теги фильтров")
     public java.util.List<String> getFilterTags() {
-        // Попробуем разные селекторы для тегов
         java.util.List<String> tags = $$(".filter__bottom .tag").texts();
         if (tags.isEmpty()) {
             tags = $$(".filter-tags .tag").texts();
@@ -331,15 +318,12 @@ public class FilterSearchPage {
 
     @Step("Нажать кнопку 'Сбросить все'")
     public FilterSearchPage clickResetAllButton() {
-      
-            $(".chips__delete-all button").click();
-            return this;
-        
+        $(".chips__delete-all button").click();
+        return this;
     }
 
     @Step("Проверить, что теги отсутствуют")
     public boolean areTagsEmpty() {
-        // Проверяем, что элемент .filter__tags не содержит дочерних элементов
         return $$(".filter__tags .tag").size() == 0;
     }
 
