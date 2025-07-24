@@ -5,11 +5,9 @@ import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 
-/**
- * Page Object для компонента поиска и фильтрации на странице TrendRealty
- * Содержит все интерактивные элементы из блока filter-search-box
- */
 public class FilterSearchPage {
 
     // Основной контейнер поиска
@@ -21,23 +19,23 @@ public class FilterSearchPage {
     private final SelenideElement clearSearchButton = $(".field__clear button");
 
     // Кнопки локации
-    private final SelenideElement districtButton = $(".location-controls button:has(span:contains('Район'))");
-    private final SelenideElement metroButton = $(".location-controls button:has(span:contains('Метро'))");
+    private final SelenideElement districtButton = $(".location-controls button:nth-child(1)");
+    private final SelenideElement metroButton = $(".location-controls button:nth-child(2)");
 
     // Селект количества комнат
-    private final SelenideElement roomsSelect = $("div.rooms[role='select']");
+    private final SelenideElement roomsSelect = $(".field-wrapper_press-effect-animation.select.rooms .field__element");
     private final SelenideElement roomsHiddenInput = $("input[name='room']");
     private final SelenideElement roomsPlaceholder = $(".rooms .select__placeholder");
     private final SelenideElement roomsDropdownIcon = $(".rooms .select__icon-down");
 
     // Селект цены
-    private final SelenideElement priceSelect = $("div.price[role='select']");
+    private final SelenideElement priceSelect = $(".field-wrapper_press-effect-animation.range-select.price .field__element");
     private final SelenideElement priceHiddenInput = $("input[name='price']");
     private final SelenideElement pricePlaceholder = $(".price .range-select__placeholder");
     private final SelenideElement priceDropdownIcon = $(".price .range-select__icon-down");
 
     // Селект срока сдачи
-    private final SelenideElement deadlineSelect = $("div.deadline[role='select']");
+    private final SelenideElement deadlineSelect = $(".field-wrapper_press-effect-animation.select.deadline .field__element");
     private final SelenideElement deadlineHiddenInput = $("input[name='deadline']");
     private final SelenideElement deadlinePlaceholder = $(".deadline .select__placeholder");
     private final SelenideElement deadlineDropdownIcon = $(".deadline .select__icon-down");
@@ -134,6 +132,123 @@ public class FilterSearchPage {
         return deadlinePlaceholder.text();
     }
 
+    // Методы для установки значений фильтров
+
+
+    @Step("Установить район: {district}")
+    public FilterSearchPage setDistrict(String district) {
+        clickDistrictButton();
+        
+        // Вводим название района в поле поиска
+        $("input[placeholder='Поиск по названию']").setValue(district);
+        
+        // Кликаем по подсказке с нужным названием
+        $$(".dropdown__list").get(0).click();
+        
+        return this;
+    }
+
+
+    @Step("Установить метро: {metro}")
+    public FilterSearchPage setMetro(String metro) {
+        // Переходим в таб метро
+        $$("button.btn_ghost").findBy(text("Метро")).click();
+
+        // Вводим название метро в поле поиска (точный локатор)
+        $(".filter-search__field input.text-field__element[placeholder='Поиск по названию']").setValue(metro);
+
+        // Кликаем по подсказке с нужным названием
+        $(".filter-search-suggestion-label__name").click();
+
+        // Закрываем модалку
+        $(".modal-header__close").click();
+
+        return this;
+    }
+
+
+    @Step("Установить количество комнат: {rooms}")
+    public FilterSearchPage setRooms(String rooms) {
+        openRoomsSelect();
+        // Выбираем "2-комнатная" (5-й элемент в списке)
+        $$(".dropdown__list .dropdown-item").get(4).click();
+        // Закрываем выпадающий список кликом по пустому месту
+        $("body").click();
+        return this;
+    }
+
+    @Step("Установить цену от {priceFrom} до {priceTo}")
+    public FilterSearchPage setPriceRange(String priceFrom, String priceTo) {
+        openPriceSelect();
+        $("input[placeholder*='от']").setValue(priceFrom);
+        $("input[placeholder*='до']").setValue(priceTo);
+        // Кнопка подтверждения цены
+     
+        // Закрываем выпадающий список кликом по пустому месту
+        $("body").click();
+        return this;
+    }
+
+    @Step("Установить срок сдачи: {deadline}")
+    public FilterSearchPage setDeadline(String deadline) {
+        openDeadlineSelect();
+        // Выбираем первый элемент в списке сроков сдачи
+        $$(".dropdown__list .dropdown-item").get(0).click();
+        // Закрываем выпадающий список кликом по пустому месту
+        $("body").click();
+        return this;
+    }
+
+    // Методы для проверки тегов фильтров
+
+    @Step("Получить все теги фильтров")
+    public java.util.List<String> getFilterTags() {
+        // Попробуем разные селекторы для тегов
+        java.util.List<String> tags = $$(".filter__bottom .tag").texts();
+        if (tags.isEmpty()) {
+            tags = $$(".filter-tags .tag").texts();
+        }
+        if (tags.isEmpty()) {
+            tags = $$(".tag").texts();
+        }
+        if (tags.isEmpty()) {
+            tags = $$("[class*='tag']").texts();
+        }
+        return tags;
+    }
+
+    @Step("Проверить наличие тега: {expectedTag}")
+    public boolean hasFilterTag(String expectedTag) {
+        return getFilterTags().contains(expectedTag);
+    }
+
+    @Step("Проверить наличие всех ожидаемых тегов")
+    public boolean hasAllExpectedTags(java.util.List<String> expectedTags) {
+        java.util.List<String> actualTags = getFilterTags();
+        return actualTags.containsAll(expectedTags);
+    }
+
+    @Step("Получить количество тегов")
+    public int getFilterTagsCount() {
+        return getFilterTags().size();
+    }
+
+    @Step("Вывести все теги для отладки")
+    public void printAllTags() {
+        java.util.List<String> tags = getFilterTags();
+        System.out.println("Найденные теги:");
+        for (String tag : tags) {
+            System.out.println("  - " + tag);
+        }
+        
+        // Дополнительная отладка - проверим все элементы с классом tag
+        System.out.println("Все элементы с классом 'tag':");
+        System.out.println("  .filter__bottom .tag: " + $$(".filter__bottom .tag").size());
+        System.out.println("  .filter-tags .tag: " + $$(".filter-tags .tag").size());
+        System.out.println("  .tag: " + $$(".tag").size());
+        System.out.println("  [class*='tag']: " + $$("[class*='tag']").size());
+    }
+
     // Методы проверки видимости элементов
 
     @Step("Проверить, что поле поиска отображается")
@@ -187,5 +302,69 @@ public class FilterSearchPage {
     @Step("Получить контейнер фильтра поиска")
     public SelenideElement getFilterSearchBox() {
         return filterSearchBox;
+    }
+
+    // Методы для работы с расширенными фильтрами
+
+    @Step("Нажать на кнопку 'Все фильтры'")
+    public FilterSearchPage clickAllFiltersButton() {
+        $$("button.btn_white").findBy(text("Все фильтры")).click();
+        return this;
+    }
+
+    @Step("Получить все названия фильтров")
+    public java.util.List<String> getAllFilterNames() {
+        return $$(".filter__extend-field .select__placeholder, .filter__extend-field .range-select__placeholder").texts();
+    }
+
+    @Step("Проверить наличие всех ожидаемых фильтров")
+    public boolean hasAllExpectedFilters(java.util.List<String> expectedFilters) {
+        java.util.List<String> actualFilters = getAllFilterNames();
+        return actualFilters.containsAll(expectedFilters);
+    }
+
+    @Step("Проверить расширенные фильтры")
+    public boolean checkExtendedFilters() {
+        java.util.List<String> expectedFilters = getExpectedExtendedFilters();
+        return hasAllExpectedFilters(expectedFilters);
+    }
+
+    @Step("Проверить теги фильтров")
+    public boolean checkFilterTags() {
+        java.util.List<String> expectedTags = getExpectedAdmiraltyTags();
+        return hasAllExpectedTags(expectedTags);
+    }
+
+    // Константы для тестовых данных
+    public static final String DISTRICT_ADMIRALTY = "Адмиралтейский";
+    public static final String METRO_ADMIRALTY = "Адмиралтейская";
+    public static final String ROOMS_2 = "2-комнатная";
+    public static final String PRICE_FROM = "10000000";
+    public static final String PRICE_TO = "20000000";
+    public static final String DEADLINE_2027 = "до 2027г.";
+
+    @Step("Получить ожидаемые теги для фильтров Адмиралтейского района")
+    public java.util.List<String> getExpectedAdmiraltyTags() {
+        return java.util.Arrays.asList(
+                "2-комнатная",
+                "м. Адмиралтейская"
+        );
+    }
+
+    @Step("Получить ожидаемые названия расширенных фильтров")
+    public java.util.List<String> getExpectedExtendedFilters() {
+        return java.util.Arrays.asList(
+                "Расстояние до метро",
+                "Прописка",
+                "Площадь от-до, м²",
+                "Площадь кухни от-до, м²",
+                "Площадь балкона от-до, м²",
+                "Отделка",
+                "Этаж",
+                "Санузел",
+                "Способ оплаты",
+                "Апартаменты",
+                "Год постройки"
+        );
     }
 }
