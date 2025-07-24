@@ -21,7 +21,7 @@ public class FilterSearchTest extends TestBase {
     @Story("Фильтрация недвижимости")
     @DisplayName("Проверка установки значений фильтров и отображения тегов")
     @Description("Тест проверяет установку значений в фильтрах и соответствие отображаемых тегов выбранным значениям")
-    void testFilterValuesAndTags() {
+    void FilterValuesAndTagsTest() {
         io.qameta.allure.Allure.step("Выполнение теста фильтрации", () -> {
             open(baseUrl);
             cookieManager.setCityForTest();
@@ -41,7 +41,7 @@ public class FilterSearchTest extends TestBase {
     @Story("Расширенные фильтры")
     @DisplayName("Проверка открытия расширенных фильтров и их названий")
     @Description("Тест проверяет открытие расширенных фильтров и соответствие названий фильтров ожидаемым значениям")
-    void testExtendedFilters() {
+    void ExtendedFiltersTest() {
         io.qameta.allure.Allure.step("Выполнение теста расширенных фильтров", () -> {
             open(baseUrl);
             cookieManager.setCityForTest();
@@ -57,7 +57,7 @@ public class FilterSearchTest extends TestBase {
     @Story("Фильтрация недвижимости")
     @DisplayName("Проверка установки значений фильтров, отображения тегов и их сброса")
     @Description("Тест проверяет установку значений в фильтрах, соответствие отображаемых тегов выбранным значениям и их удаление")
-    void testFilterValuesAndTagsWithReset() {
+    void FilterValuesAndTagsWithResetTest() {
         io.qameta.allure.Allure.step("Выполнение теста фильтрации со сбросом", () -> {
             open(baseUrl);
             cookieManager.setCityForTest();
@@ -81,7 +81,7 @@ public class FilterSearchTest extends TestBase {
     @Story("Поиск недвижимости")
     @DisplayName("Проверка ввода текста в поле поиска и его очистки")
     @Description("Тест проверяет возможность ввода текста в поле поиска, его получения и очистки через кнопку крестика")
-    void testSearchFieldClear() {
+    void SearchFieldClearTest() {
         io.qameta.allure.Allure.step("Выполнение теста очистки поля поиска", () -> {
             open(baseUrl);
             cookieManager.setCityForTest();
