@@ -40,10 +40,6 @@ public class FilterSearchPage {
         return searchField.getValue();
     }
 
-    public String getSearchFieldValue() {
-        return searchField.getValue();
-    }
-
     // Методы для работы с кнопками локации
 
     public FilterSearchPage clickDistrictButton() {
@@ -91,7 +87,7 @@ public class FilterSearchPage {
         
         $("input[placeholder='Поиск по названию']").setValue(district);
         
-        $$(".dropdown__list").get(0).click();
+        $$(".dropdown__list").first().click();
         
         return this;
     }
@@ -111,7 +107,7 @@ public class FilterSearchPage {
     public FilterSearchPage setRooms(String rooms) {
         openRoomsSelect();
         $$(".dropdown-item").findBy(text(rooms)).click();
-        $("body").click();
+        closeDropdown();
         return this;
     }
 
@@ -120,31 +116,21 @@ public class FilterSearchPage {
         $("input[placeholder*='от']").setValue(priceFrom);
         $("input[placeholder*='до']").setValue(priceTo);
      
-        $("body").click();
+        closeDropdown();
         return this;
     }
 
     public FilterSearchPage setDeadline(String deadline) {
         openDeadlineSelect();
         $$(".dropdown-item").get(3).click();
-        $("body").click();
+        closeDropdown();
         return this;
     }
 
     // Методы для получения данных о тегах фильтров
 
     public java.util.List<String> getFilterTags() {
-        java.util.List<String> tags = $$(".filter__bottom .tag").texts();
-        if (tags.isEmpty()) {
-            tags = $$(".filter-tags .tag").texts();
-        }
-        if (tags.isEmpty()) {
-            tags = $$(".tag").texts();
-        }
-        if (tags.isEmpty()) {
-            tags = $$("[class*='tag']").texts();
-        }
-        return tags;
+        return $$(".filter__tags .tag").texts();
     }
 
     public int getTagsCount() {
@@ -173,6 +159,13 @@ public class FilterSearchPage {
         while ($$(".chips__item .chips__delete .btn_clear").size() > 0) {
             $(".chips__item .chips__delete .btn_clear").click();
         }
+        return this;
+    }
+
+    // Вспомогательные методы
+
+    private FilterSearchPage closeDropdown() {
+        $(".modal-header__close").click();
         return this;
     }
 }

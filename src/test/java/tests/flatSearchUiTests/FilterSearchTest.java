@@ -1,5 +1,6 @@
 package tests.flatSearchUiTests;
 
+import data.TestData;
 import helpers.CookieManager;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
@@ -7,7 +8,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.FilterSearchPage;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static com.codeborne.selenide.Configuration.baseUrl;
@@ -25,12 +25,9 @@ public class FilterSearchTest extends TestBase {
     @Story("Фильтрация недвижимости")
     @DisplayName("Проверка установки значений фильтров и отображения тегов")
     @Description("Тест проверяет установку значений в фильтрах и соответствие отображаемых тегов выбранным значениям")
-    void FilterValuesAndTagsTest() {
+    void filterValuesAndTagsTest() {
         step("Открытие главной страницы", () -> {
             open(baseUrl);
-        });
-
-        step("Установка города для тестирования", () -> {
             cookieManager.setCityForTest();
         });
 
@@ -54,12 +51,9 @@ public class FilterSearchTest extends TestBase {
     @Story("Расширенные фильтры")
     @DisplayName("Проверка открытия расширенных фильтров и их названий")
     @Description("Тест проверяет открытие расширенных фильтров и соответствие названий фильтров ожидаемым значениям")
-    void ExtendedFiltersTest() {
+    void extendedFiltersTest() {
         step("Открытие главной страницы", () -> {
             open(baseUrl);
-        });
-
-        step("Установка города для тестирования", () -> {
             cookieManager.setCityForTest();
         });
 
@@ -79,12 +73,9 @@ public class FilterSearchTest extends TestBase {
     @Story("Фильтрация недвижимости")
     @DisplayName("Проверка установки значений фильтров, отображения тегов и их сброса")
     @Description("Тест проверяет установку значений в фильтрах, соответствие отображаемых тегов выбранным значениям и их удаление")
-    void FilterValuesAndTagsWithResetTest() {
+    void filterValuesAndTagsWithResetTest() {
         step("Открытие главной страницы", () -> {
             open(baseUrl);
-        });
-
-        step("Установка города для тестирования", () -> {
             cookieManager.setCityForTest();
         });
 
@@ -118,12 +109,9 @@ public class FilterSearchTest extends TestBase {
     @Story("Поиск недвижимости")
     @DisplayName("Проверка ввода текста в поле поиска и его очистки")
     @Description("Тест проверяет возможность ввода текста в поле поиска, его получения и очистки через кнопку крестика")
-    void SearchFieldClearTest() {
+    void searchFieldClearTest() {
         step("Открытие главной страницы", () -> {
             open(baseUrl);
-        });
-
-        step("Установка города для тестирования", () -> {
             cookieManager.setCityForTest();
         });
 
@@ -141,7 +129,7 @@ public class FilterSearchTest extends TestBase {
         });
 
         step("Проверка пустого поля поиска", () -> {
-            String searchFieldValue = filterSearchPage.getSearchFieldValue();
+            String searchFieldValue = filterSearchPage.getSearchText();
             assertTrue(searchFieldValue.isEmpty(),
                     "После нажатия на кнопку очистки поле поиска должно быть пустым");
         });
@@ -154,9 +142,6 @@ public class FilterSearchTest extends TestBase {
     void testFilterValuesDisplay() {
         step("Открытие главной страницы", () -> {
             open(baseUrl);
-        });
-
-        step("Установка города для тестирования", () -> {
             cookieManager.setCityForTest();
         });
 
@@ -181,9 +166,6 @@ public class FilterSearchTest extends TestBase {
     void testFilterValuesAndTagsWithIndividualReset() {
         step("Открытие главной страницы", () -> {
             open(baseUrl);
-        });
-
-        step("Установка города для тестирования", () -> {
             cookieManager.setCityForTest();
         });
 
