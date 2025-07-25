@@ -7,6 +7,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.FilterSearchPage;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.open;
 import static io.qameta.allure.Allure.step;
@@ -32,15 +35,17 @@ public class FilterSearchTest extends TestBase {
         });
 
         step("Установка значений фильтров", () -> {
-            filterSearchPage.setDistrict(FilterSearchPage.DISTRICT_ADMIRALTY)
-                    .setMetro(FilterSearchPage.METRO_ADMIRALTY)
-                    .setRooms(FilterSearchPage.ROOMS_2)
-                    .setPriceRange(FilterSearchPage.PRICE_FROM, FilterSearchPage.PRICE_TO)
-                    .setDeadline(FilterSearchPage.DEADLINE);
+            filterSearchPage.setDistrict(TestData.DISTRICT_ADMIRALTY)
+                    .setMetro(TestData.METRO_ADMIRALTY)
+                    .setRooms(TestData.ROOMS_2)
+                    .setPriceRange(TestData.PRICE_FROM, TestData.PRICE_TO)
+                    .setDeadline(TestData.DEADLINE);
         });
 
         step("Проверка отображения тегов фильтров", () -> {
-            assertTrue(filterSearchPage.checkFilterTags(),
+            List<String> actualTags = filterSearchPage.getFilterTags();
+            List<String> expectedTags = TestData.getExpectedAdmiraltyTags();
+            assertTrue(actualTags.containsAll(expectedTags),
                     "Все выбранные значения фильтров должны отображаться в виде тегов");
         });
     }
@@ -63,7 +68,9 @@ public class FilterSearchTest extends TestBase {
         });
 
         step("Проверка отображения расширенных фильтров", () -> {
-            assertTrue(filterSearchPage.checkExtendedFilters(),
+            List<String> actualFilters = filterSearchPage.getAllFilterNames();
+            List<String> expectedFilters = TestData.getExpectedExtendedFilters();
+            assertTrue(actualFilters.containsAll(expectedFilters),
                     "Все расширенные фильтры должны отображаться с правильными названиями");
         });
     }
@@ -82,15 +89,17 @@ public class FilterSearchTest extends TestBase {
         });
 
         step("Установка значений фильтров", () -> {
-            filterSearchPage.setDistrict(FilterSearchPage.DISTRICT_ADMIRALTY)
-                    .setMetro(FilterSearchPage.METRO_ADMIRALTY)
-                    .setRooms(FilterSearchPage.ROOMS_2)
-                    .setPriceRange(FilterSearchPage.PRICE_FROM, FilterSearchPage.PRICE_TO)
-                    .setDeadline(FilterSearchPage.DEADLINE);
+            filterSearchPage.setDistrict(TestData.DISTRICT_ADMIRALTY)
+                    .setMetro(TestData.METRO_ADMIRALTY)
+                    .setRooms(TestData.ROOMS_2)
+                    .setPriceRange(TestData.PRICE_FROM, TestData.PRICE_TO)
+                    .setDeadline(TestData.DEADLINE);
         });
 
         step("Проверка отображения тегов фильтров", () -> {
-            assertTrue(filterSearchPage.checkFilterTags(),
+            List<String> actualTags = filterSearchPage.getFilterTags();
+            List<String> expectedTags = TestData.getExpectedAdmiraltyTags();
+            assertTrue(actualTags.containsAll(expectedTags),
                     "Все выбранные значения фильтров должны отображаться в виде тегов");
         });
 
@@ -99,7 +108,8 @@ public class FilterSearchTest extends TestBase {
         });
 
         step("Проверка отсутствия тегов после сброса", () -> {
-            assertTrue(filterSearchPage.areTagsEmpty(),
+            int tagsCount = filterSearchPage.getTagsCount();
+            assertTrue(tagsCount == 0,
                     "После нажатия 'Сбросить все' теги должны отсутствовать");
         });
     }
@@ -118,11 +128,11 @@ public class FilterSearchTest extends TestBase {
         });
 
         step("Ввод текста в поле поиска", () -> {
-            filterSearchPage.enterSearchText(FilterSearchPage.TEST_SEARCH_TEXT);
+            filterSearchPage.enterSearchText(TestData.TEST_SEARCH_TEXT);
         });
 
         step("Проверка введенного текста", () -> {
-            assertEquals(FilterSearchPage.TEST_SEARCH_TEXT, filterSearchPage.getSearchText(),
+            assertEquals(TestData.TEST_SEARCH_TEXT, filterSearchPage.getSearchText(),
                     "Введенный текст должен соответствовать полученному из поля поиска");
         });
 
@@ -131,7 +141,8 @@ public class FilterSearchTest extends TestBase {
         });
 
         step("Проверка пустого поля поиска", () -> {
-            assertTrue(filterSearchPage.isSearchFieldEmpty(),
+            String searchFieldValue = filterSearchPage.getSearchFieldValue();
+            assertTrue(searchFieldValue.isEmpty(),
                     "После нажатия на кнопку очистки поле поиска должно быть пустым");
         });
     }
@@ -150,9 +161,9 @@ public class FilterSearchTest extends TestBase {
         });
 
         step("Установка значений фильтров", () -> {
-            filterSearchPage.setRooms(FilterSearchPage.ROOMS_2)
-                    .setPriceRange(FilterSearchPage.PRICE_FROM, FilterSearchPage.PRICE_TO)
-                    .setDeadline(FilterSearchPage.DEADLINE);
+            filterSearchPage.setRooms(TestData.ROOMS_2)
+                    .setPriceRange(TestData.PRICE_FROM, TestData.PRICE_TO)
+                    .setDeadline(TestData.DEADLINE);
         });
 
         step("Проверка отображения значений в фильтрах", () -> {
@@ -177,15 +188,17 @@ public class FilterSearchTest extends TestBase {
         });
 
         step("Установка значений фильтров", () -> {
-            filterSearchPage.setDistrict(FilterSearchPage.DISTRICT_ADMIRALTY)
-                    .setMetro(FilterSearchPage.METRO_ADMIRALTY)
-                    .setRooms(FilterSearchPage.ROOMS_2)
-                    .setPriceRange(FilterSearchPage.PRICE_FROM, FilterSearchPage.PRICE_TO)
-                    .setDeadline(FilterSearchPage.DEADLINE);
+            filterSearchPage.setDistrict(TestData.DISTRICT_ADMIRALTY)
+                    .setMetro(TestData.METRO_ADMIRALTY)
+                    .setRooms(TestData.ROOMS_2)
+                    .setPriceRange(TestData.PRICE_FROM, TestData.PRICE_TO)
+                    .setDeadline(TestData.DEADLINE);
         });
 
         step("Проверка отображения тегов фильтров", () -> {
-            assertTrue(filterSearchPage.checkFilterTags(),
+            List<String> actualTags = filterSearchPage.getFilterTags();
+            List<String> expectedTags = TestData.getExpectedAdmiraltyTags();
+            assertTrue(actualTags.containsAll(expectedTags),
                     "Все выбранные значения фильтров должны отображаться в виде тегов");
         });
         
@@ -194,7 +207,8 @@ public class FilterSearchTest extends TestBase {
         });
 
         step("Проверка отсутствия тегов после удаления", () -> {
-            assertTrue(filterSearchPage.areTagsEmpty(),
+            int tagsCount = filterSearchPage.getTagsCount();
+            assertTrue(tagsCount == 0,
                     "После удаления всех тегов по одному теги должны отсутствовать");
         });
     }
