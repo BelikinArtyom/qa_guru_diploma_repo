@@ -3,8 +3,10 @@ package tests.flatSearchUiTests;
 import data.TestData;
 import helpers.CookieManager;
 import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pages.FilterSearchPage;
 
@@ -22,6 +24,8 @@ public class FilterSearchTest extends TestBase {
     private final CookieManager cookieManager = new CookieManager();
 
     @Test
+    @Tag("Smoke")
+    @Owner("belikinA")
     @Story("Фильтрация недвижимости")
     @DisplayName("Проверка установки значений фильтров и отображения тегов")
     @Description("Тест проверяет установку значений в фильтрах и соответствие отображаемых тегов выбранным значениям")
@@ -48,6 +52,8 @@ public class FilterSearchTest extends TestBase {
     }
 
     @Test
+    @Tag("Smoke")
+    @Owner("belikinA")
     @Story("Расширенные фильтры")
     @DisplayName("Проверка открытия расширенных фильтров и их названий")
     @Description("Тест проверяет открытие расширенных фильтров и соответствие названий фильтров ожидаемым значениям")
@@ -70,6 +76,8 @@ public class FilterSearchTest extends TestBase {
     }
 
     @Test
+    @Tag("Smoke")
+    @Owner("belikinA")
     @Story("Фильтрация недвижимости")
     @DisplayName("Проверка установки значений фильтров, отображения тегов и их сброса")
     @Description("Тест проверяет установку значений в фильтрах, соответствие отображаемых тегов выбранным значениям и их удаление")
@@ -106,6 +114,8 @@ public class FilterSearchTest extends TestBase {
     }
 
     @Test
+    @Tag("Smoke")
+    @Owner("belikinA")
     @Story("Поиск недвижимости")
     @DisplayName("Проверка ввода текста в поле поиска и его очистки")
     @Description("Тест проверяет возможность ввода текста в поле поиска, его получения и очистки через кнопку крестика")
@@ -136,6 +146,8 @@ public class FilterSearchTest extends TestBase {
     }
 
     @Test
+    @Tag("Smoke")
+    @Owner("belikinA")
     @Story("Фильтрация недвижимости")
     @DisplayName("Проверка отображения установленных значений фильтров")
     @Description("Тест проверяет установку значений в фильтрах и соответствие отображаемого текста установленным значениям")
@@ -160,6 +172,8 @@ public class FilterSearchTest extends TestBase {
     }
 
     @Test
+    @Tag("Smoke")
+    @Owner("belikinA")
     @Story("Фильтрация недвижимости")
     @DisplayName("Проверка установки значений фильтров, отображения тегов и их удаления по одному")
     @Description("Тест проверяет установку значений в фильтрах, соответствие отображаемых тегов выбранным значениям и их удаление по одному")

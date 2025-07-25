@@ -17,18 +17,18 @@ public class FilterSearchPage {
     private final SelenideElement districtButton = $(".location-controls button:nth-child(1)");
 
     // Селект количества комнат
-    private final SelenideElement roomsSelect = $(".field-wrapper_press-effect-animation.select.rooms .field__element");
-    private final SelenideElement roomsPlaceholder = $(".field-wrapper.select.rooms .field__element span");
+    private final SelenideElement roomsSelect = $(".select.rooms .field__element");
+    private final SelenideElement roomsPlaceholder = $(".select.rooms .field__element span");
 
     // Селект цены
-    private final SelenideElement priceSelect = $(".field-wrapper_press-effect-animation.range-select.price .field__element");
-    private final SelenideElement pricePlaceholder = $(".field-wrapper.range-select.price .field__element span");
+    private final SelenideElement priceSelect = $(".range-select.price .field__element");
+    private final SelenideElement pricePlaceholder = $(".range-select.price .field__element span");
     private final SelenideElement priceFromInput = $("input[placeholder*='от']");
     private final SelenideElement priceToInput = $("input[placeholder*='до']");
 
     // Селект срока сдачи
-    private final SelenideElement deadlineSelect = $(".field-wrapper_press-effect-animation.select.deadline .field__element");
-    private final SelenideElement deadlinePlaceholder = $(".field-wrapper.select.deadline .field__element span");
+    private final SelenideElement deadlineSelect = $(".select.deadline .field__element");
+    private final SelenideElement deadlinePlaceholder = $(".select.deadline .field__element span");
 
     // Элементы для работы с районом
     private final SelenideElement districtSearchInput = $("input[placeholder='Поиск по названию']");
@@ -53,11 +53,11 @@ public class FilterSearchPage {
 
     // Элементы для работы с расширенными фильтрами
     private final SelenideElement allFiltersButton = $$("button.btn_white").findBy(text("Все фильтры"));
-    private final ElementsCollection extendedFilterNames = $$(".filter__extend-field .select__placeholder, .filter__extend-field .range-select__placeholder");
+    private final ElementsCollection extendedFilterNames = $$(".filter__extend-field [class*='placeholder']");
 
     // Элементы для работы с кнопками сброса
     private final SelenideElement resetAllButton = $(".chips__delete-all button");
-    private final ElementsCollection individualDeleteButtons = $$(".chips__item .chips__delete .btn_clear");
+    private final ElementsCollection individualDeleteButtons = $$(".chips__delete .btn_clear, .chips__item .btn_clear");
 
     // Методы для работы с поиском
 
