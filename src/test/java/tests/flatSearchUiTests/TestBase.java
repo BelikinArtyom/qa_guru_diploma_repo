@@ -12,7 +12,6 @@ public class TestBase {
         String BROWSER_SIZE = System.getProperty("browser.size", "2560x1440");
         Configuration.browser = BROWSER;
         Configuration.browserSize = BROWSER_SIZE;
-
         Configuration.baseUrl = "https://trendrealty.ru/";
     }
 }

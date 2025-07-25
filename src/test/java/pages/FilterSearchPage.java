@@ -1,5 +1,6 @@
 package pages;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -17,12 +18,46 @@ public class FilterSearchPage {
 
     // Селект количества комнат
     private final SelenideElement roomsSelect = $(".field-wrapper_press-effect-animation.select.rooms .field__element");
+    private final SelenideElement roomsPlaceholder = $(".field-wrapper.select.rooms .field__element span");
 
     // Селект цены
     private final SelenideElement priceSelect = $(".field-wrapper_press-effect-animation.range-select.price .field__element");
+    private final SelenideElement pricePlaceholder = $(".field-wrapper.range-select.price .field__element span");
+    private final SelenideElement priceFromInput = $("input[placeholder*='от']");
+    private final SelenideElement priceToInput = $("input[placeholder*='до']");
 
     // Селект срока сдачи
     private final SelenideElement deadlineSelect = $(".field-wrapper_press-effect-animation.select.deadline .field__element");
+    private final SelenideElement deadlinePlaceholder = $(".field-wrapper.select.deadline .field__element span");
+
+    // Элементы для работы с районом
+    private final SelenideElement districtSearchInput = $("input[placeholder='Поиск по названию']");
+    private final SelenideElement firstDropdownItem = $$(".dropdown__list").first();
+
+    // Элементы для работы с метро
+    private final SelenideElement metroButton = $$("button.btn_ghost").findBy(text("Метро"));
+    private final SelenideElement metroSearchInput = $(".filter-search__field input.text-field__element[placeholder='Поиск по названию']");
+    private final SelenideElement metroSuggestion = $(".filter-search-suggestion-label__name");
+    private final SelenideElement modalCloseButton = $(".modal-header__close");
+
+    // Элементы для работы с комнатами и сроками
+    private final ElementsCollection dropdownItems = $$(".dropdown-item");
+    private final SelenideElement bodyElement = $("body");
+
+    // Элементы для работы с тегами
+    private final ElementsCollection filterBottomTags = $$(".filter__bottom .tag");
+    private final ElementsCollection filterTags = $$(".filter-tags .tag");
+    private final ElementsCollection allTags = $$(".tag");
+    private final ElementsCollection anyTagElements = $$("[class*='tag']");
+    private final ElementsCollection filterTagsForCount = $$(".filter__tags .tag");
+
+    // Элементы для работы с расширенными фильтрами
+    private final SelenideElement allFiltersButton = $$("button.btn_white").findBy(text("Все фильтры"));
+    private final ElementsCollection extendedFilterNames = $$(".filter__extend-field .select__placeholder, .filter__extend-field .range-select__placeholder");
+
+    // Элементы для работы с кнопками сброса
+    private final SelenideElement resetAllButton = $(".chips__delete-all button");
+    private final ElementsCollection individualDeleteButtons = $$(".chips__item .chips__delete .btn_clear");
 
     // Методы для работы с поиском
 
@@ -55,7 +90,7 @@ public class FilterSearchPage {
     }
 
     public String getRoomsPlaceholder() {
-        return $(".field-wrapper.select.rooms .field__element span").text();
+        return roomsPlaceholder.text();
     }
 
     // Методы для работы с селектом цены
@@ -66,7 +101,7 @@ public class FilterSearchPage {
     }
 
     public String getPricePlaceholder() {
-        return $(".field-wrapper.range-select.price .field__element span").text();
+        return pricePlaceholder.text();
     }
 
     // Методы для работы с селектом срока сдачи
@@ -77,7 +112,7 @@ public class FilterSearchPage {
     }
 
     public String getDeadlinePlaceholder() {
-        return $(".field-wrapper.select.deadline .field__element span").text();
+        return deadlinePlaceholder.text();
     }
 
     // Методы для установки значений фильтров
@@ -85,78 +120,88 @@ public class FilterSearchPage {
     public FilterSearchPage setDistrict(String district) {
         clickDistrictButton();
         
-        $("input[placeholder='Поиск по названию']").setValue(district);
+        districtSearchInput.setValue(district);
         
-        $$(".dropdown__list").first().click();
+        firstDropdownItem.click();
         
         return this;
     }
 
     public FilterSearchPage setMetro(String metro) {
-        $$("button.btn_ghost").findBy(text("Метро")).click();
+        metroButton.click();
 
-        $(".filter-search__field input.text-field__element[placeholder='Поиск по названию']").setValue(metro);
+        metroSearchInput.setValue(metro);
 
-        $(".filter-search-suggestion-label__name").click();
+        metroSuggestion.click();
 
-        $(".modal-header__close").click();
+        modalCloseButton.click();
 
         return this;
     }
 
     public FilterSearchPage setRooms(String rooms) {
         openRoomsSelect();
-        $$(".dropdown-item").findBy(text(rooms)).click();
-        $("body").click();
+        dropdownItems.findBy(text(rooms)).click();
+        bodyElement.click();
         return this;
     }
 
     public FilterSearchPage setPriceRange(String priceFrom, String priceTo) {
         openPriceSelect();
-        $("input[placeholder*='от']").setValue(priceFrom);
-        $("input[placeholder*='до']").setValue(priceTo);
-        $("body").click();
+        priceFromInput.setValue(priceFrom);
+        priceToInput.setValue(priceTo);
+        bodyElement.click();
         return this;
     }
 
     public FilterSearchPage setDeadline(String deadline) {
         openDeadlineSelect();
-        $$(".dropdown-item").get(3).click();
-        $("body").click();
+        dropdownItems.get(3).click();
+        bodyElement.click();
         return this;
     }
 
     // Методы для получения данных о тегах фильтров
 
     public java.util.List<String> getFilterTags() {
-        return $$(".filter__tags .tag").texts();
+        java.util.List<String> tags = filterBottomTags.texts();
+        if (tags.isEmpty()) {
+            tags = filterTags.texts();
+        }
+        if (tags.isEmpty()) {
+            tags = allTags.texts();
+        }
+        if (tags.isEmpty()) {
+            tags = anyTagElements.texts();
+        }
+        return tags;
     }
 
     public int getTagsCount() {
-        return $$(".filter__tags .tag").size();
+        return filterTagsForCount.size();
     }
 
     // Методы для работы с расширенными фильтрами
 
     public FilterSearchPage clickAllFiltersButton() {
-        $$("button.btn_white").findBy(text("Все фильтры")).click();
+        allFiltersButton.click();
         return this;
     }
 
     public java.util.List<String> getAllFilterNames() {
-        return $$(".filter__extend-field .select__placeholder, .filter__extend-field .range-select__placeholder").texts();
+        return extendedFilterNames.texts();
     }
 
     // Методы для работы с кнопками сброса
 
     public FilterSearchPage clickResetAllButton() {
-        $(".chips__delete-all button").click();
+        resetAllButton.click();
         return this;
     }
 
     public FilterSearchPage removeAllTagsIndividually() {
-        while ($$(".chips__item .chips__delete .btn_clear").size() > 0) {
-            $(".chips__item .chips__delete .btn_clear").click();
+        while (individualDeleteButtons.size() > 0) {
+            individualDeleteButtons.first().click();
         }
         return this;
     }
@@ -164,7 +209,7 @@ public class FilterSearchPage {
     // Вспомогательные методы
 
     private FilterSearchPage closeDropdown() {
-        $(".modal-header__close").click();
+        modalCloseButton.click();
         return this;
     }
 }
