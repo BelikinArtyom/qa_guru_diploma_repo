@@ -107,7 +107,7 @@ public class FilterSearchPage {
     public FilterSearchPage setRooms(String rooms) {
         openRoomsSelect();
         $$(".dropdown-item").findBy(text(rooms)).click();
-        closeDropdown();
+        $("body").click();
         return this;
     }
 
@@ -115,15 +115,14 @@ public class FilterSearchPage {
         openPriceSelect();
         $("input[placeholder*='от']").setValue(priceFrom);
         $("input[placeholder*='до']").setValue(priceTo);
-     
-        closeDropdown();
+        $("body").click();
         return this;
     }
 
     public FilterSearchPage setDeadline(String deadline) {
         openDeadlineSelect();
         $$(".dropdown-item").get(3).click();
-        closeDropdown();
+        $("body").click();
         return this;
     }
 
