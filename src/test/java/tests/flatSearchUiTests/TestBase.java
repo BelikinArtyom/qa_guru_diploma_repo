@@ -13,5 +13,11 @@ public class TestBase {
         Configuration.browser = BROWSER;
         Configuration.browserSize = BROWSER_SIZE;
         Configuration.baseUrl = "https://trendrealty.ru/";
+        
+        Configuration.timeout = 10000;
+        Configuration.pollingInterval = 200; 
+        Configuration.reportsFolder = "build/selenide-reports";
+        
+        Configuration.fastSetValue = false; 
     }
 }

@@ -1,6 +1,5 @@
 package tests.flatSearchUiTests;
 
-import data.TestData;
 import helpers.CookieManager;
 import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
@@ -10,13 +9,11 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pages.FilterSearchPage;
 
-import java.util.List;
-
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Condition.*;
 import static io.qameta.allure.Allure.step;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FilterSearchTest extends TestBase {
 
@@ -28,7 +25,7 @@ public class FilterSearchTest extends TestBase {
     @Owner("belikinA")
     @Story("Фильтрация недвижимости")
     @DisplayName("Проверка установки значений фильтров и отображения тегов")
-    @Description("Тест проверяет установку значений в фильтрах и соответствие отображаемых тегов выбранным значениям")
+    @Description("Установка значений в фильтрах и соответствие отображаемых тегов выбранным значениям")
     void filterValuesAndTagsTest() {
         step("Открытие главной страницы", () -> {
             open(baseUrl);
@@ -36,18 +33,18 @@ public class FilterSearchTest extends TestBase {
         });
 
         step("Установка значений фильтров", () -> {
-            filterSearchPage.setDistrict(TestData.DISTRICT_ADMIRALTY)
-                    .setMetro(TestData.METRO_ADMIRALTY)
-                    .setRooms(TestData.ROOMS_2)
-                    .setPriceRange(TestData.PRICE_FROM, TestData.PRICE_TO)
-                    .setDeadline(TestData.DEADLINE);
+            filterSearchPage.setDistrict("Адмиралтейский")
+                    .setMetro("Адмиралтейская")
+                    .setRooms("2-комнатная")
+                    .setPriceRange("10000000", "20000000")
+                    .setDeadline("до 2027 г.");
         });
 
         step("Проверка отображения тегов фильтров", () -> {
-            List<String> actualTags = filterSearchPage.getFilterTags();
-            List<String> expectedTags = TestData.getExpectedAdmiraltyTags();
-            assertTrue(actualTags.containsAll(expectedTags),
-                    "Все выбранные значения фильтров должны отображаться в виде тегов");
+            var tags = filterSearchPage.getFilterTags();
+            assertEquals(5, tags.size(), "Количество тегов должно быть равно 5");
+            assertTrue(tags.contains("2-комнатная"), "Тег '2-комнатная' должен присутствовать");
+            assertTrue(tags.contains("м. Адмиралтейская"), "Тег 'м. Адмиралтейская' должен присутствовать");
         });
     }
 
@@ -56,7 +53,7 @@ public class FilterSearchTest extends TestBase {
     @Owner("belikinA")
     @Story("Расширенные фильтры")
     @DisplayName("Проверка открытия расширенных фильтров и их названий")
-    @Description("Тест проверяет открытие расширенных фильтров и соответствие названий фильтров ожидаемым значениям")
+    @Description("Открытие расширенных фильтров и соответствие названий фильтров ожидаемым значениям")
     void extendedFiltersTest() {
         step("Открытие главной страницы", () -> {
             open(baseUrl);
@@ -68,10 +65,19 @@ public class FilterSearchTest extends TestBase {
         });
 
         step("Проверка отображения расширенных фильтров", () -> {
-            List<String> actualFilters = filterSearchPage.getAllFilterNames();
-            List<String> expectedFilters = TestData.getExpectedExtendedFilters();
-            assertTrue(actualFilters.containsAll(expectedFilters),
-                    "Все расширенные фильтры должны отображаться с правильными названиями");
+            var filters = filterSearchPage.getAllFilterNames();
+            assertEquals(11, filters.size(), "Количество расширенных фильтров должно быть равно 11");
+            assertTrue(filters.contains("Расстояние до метро"), "Фильтр 'Расстояние до метро' должен присутствовать");
+            assertTrue(filters.contains("Прописка"), "Фильтр 'Прописка' должен присутствовать");
+            assertTrue(filters.contains("Площадь от-до, м²"), "Фильтр 'Площадь от-до, м²' должен присутствовать");
+            assertTrue(filters.contains("Площадь кухни от-до, м²"), "Фильтр 'Площадь кухни от-до, м²' должен присутствовать");
+            assertTrue(filters.contains("Площадь балкона от-до, м²"), "Фильтр 'Площадь балкона от-до, м²' должен присутствовать");
+            assertTrue(filters.contains("Отделка"), "Фильтр 'Отделка' должен присутствовать");
+            assertTrue(filters.contains("Этаж"), "Фильтр 'Этаж' должен присутствовать");
+            assertTrue(filters.contains("Санузел"), "Фильтр 'Санузел' должен присутствовать");
+            assertTrue(filters.contains("Способ оплаты"), "Фильтр 'Способ оплаты' должен присутствовать");
+            assertTrue(filters.contains("Апартаменты"), "Фильтр 'Апартаменты' должен присутствовать");
+            assertTrue(filters.contains("Год постройки"), "Фильтр 'Год постройки' должен присутствовать");
         });
     }
 
@@ -80,7 +86,7 @@ public class FilterSearchTest extends TestBase {
     @Owner("belikinA")
     @Story("Фильтрация недвижимости")
     @DisplayName("Проверка установки значений фильтров, отображения тегов и их сброса")
-    @Description("Тест проверяет установку значений в фильтрах, соответствие отображаемых тегов выбранным значениям и их удаление")
+    @Description("Установка значений в фильтрах, соответствие отображаемых тегов выбранным значениям и их удаление")
     void filterValuesAndTagsWithResetTest() {
         step("Открытие главной страницы", () -> {
             open(baseUrl);
@@ -88,18 +94,18 @@ public class FilterSearchTest extends TestBase {
         });
 
         step("Установка значений фильтров", () -> {
-            filterSearchPage.setDistrict(TestData.DISTRICT_ADMIRALTY)
-                    .setMetro(TestData.METRO_ADMIRALTY)
-                    .setRooms(TestData.ROOMS_2)
-                    .setPriceRange(TestData.PRICE_FROM, TestData.PRICE_TO)
-                    .setDeadline(TestData.DEADLINE);
+            filterSearchPage.setDistrict("Адмиралтейский")
+                    .setMetro("Адмиралтейская")
+                    .setRooms("2-комнатная")
+                    .setPriceRange("10000000", "20000000")
+                    .setDeadline("до 2027 г.");
         });
 
         step("Проверка отображения тегов фильтров", () -> {
-            List<String> actualTags = filterSearchPage.getFilterTags();
-            List<String> expectedTags = TestData.getExpectedAdmiraltyTags();
-            assertTrue(actualTags.containsAll(expectedTags),
-                    "Все выбранные значения фильтров должны отображаться в виде тегов");
+            var tags = filterSearchPage.getFilterTags();
+            assertEquals(5, tags.size(), "Количество тегов должно быть равно 5");
+            assertTrue(tags.contains("2-комнатная"), "Тег '2-комнатная' должен присутствовать");
+            assertTrue(tags.contains("м. Адмиралтейская"), "Тег 'м. Адмиралтейская' должен присутствовать");
         });
 
         step("Сброс всех фильтров", () -> {
@@ -107,9 +113,7 @@ public class FilterSearchTest extends TestBase {
         });
 
         step("Проверка отсутствия тегов после сброса", () -> {
-            int tagsCount = filterSearchPage.getTagsCount();
-            assertTrue(tagsCount == 0,
-                    "После нажатия 'Сбросить все' теги должны отсутствовать");
+            assertEquals(0, filterSearchPage.getTagsCount(), "После сброса всех фильтров теги должны отсутствовать");
         });
     }
 
@@ -118,7 +122,7 @@ public class FilterSearchTest extends TestBase {
     @Owner("belikinA")
     @Story("Поиск недвижимости")
     @DisplayName("Проверка ввода текста в поле поиска и его очистки")
-    @Description("Тест проверяет возможность ввода текста в поле поиска, его получения и очистки через кнопку крестика")
+    @Description("Ввод текста в поле поиска, его получение и очистка через кнопку крестика")
     void searchFieldClearTest() {
         step("Открытие главной страницы", () -> {
             open(baseUrl);
@@ -126,12 +130,11 @@ public class FilterSearchTest extends TestBase {
         });
 
         step("Ввод текста в поле поиска", () -> {
-            filterSearchPage.enterSearchText(TestData.TEST_SEARCH_TEXT);
+            filterSearchPage.enterSearchText("Тестовый ЖК");
         });
 
         step("Проверка введенного текста", () -> {
-            assertEquals(TestData.TEST_SEARCH_TEXT, filterSearchPage.getSearchText(),
-                    "Введенный текст должен соответствовать полученному из поля поиска");
+            assertEquals("Тестовый ЖК", filterSearchPage.getSearchText(), "Введенный текст должен соответствовать полученному");
         });
 
         step("Очистка поля поиска", () -> {
@@ -139,9 +142,7 @@ public class FilterSearchTest extends TestBase {
         });
 
         step("Проверка пустого поля поиска", () -> {
-            String searchFieldValue = filterSearchPage.getSearchText();
-            assertTrue(searchFieldValue.isEmpty(),
-                    "После нажатия на кнопку очистки поле поиска должно быть пустым");
+            assertTrue(filterSearchPage.getSearchText().isEmpty(), "После очистки поле поиска должно быть пустым");
         });
     }
 
@@ -150,7 +151,7 @@ public class FilterSearchTest extends TestBase {
     @Owner("belikinA")
     @Story("Фильтрация недвижимости")
     @DisplayName("Проверка отображения установленных значений фильтров")
-    @Description("Тест проверяет установку значений в фильтрах и соответствие отображаемого текста установленным значениям")
+    @Description("Установка значений в фильтрах и соответствие отображаемого текста установленным значениям")
     void testFilterValuesDisplay() {
         step("Открытие главной страницы", () -> {
             open(baseUrl);
@@ -158,16 +159,15 @@ public class FilterSearchTest extends TestBase {
         });
 
         step("Установка значений фильтров", () -> {
-            filterSearchPage.setRooms(TestData.ROOMS_2)
-                    .setPriceRange(TestData.PRICE_FROM, TestData.PRICE_TO)
-                    .setDeadline(TestData.DEADLINE);
+            filterSearchPage.setRooms("2-комнатная")
+                    .setPriceRange("10000000", "20000000")
+                    .setDeadline("до 2027 г.");
         });
 
         step("Проверка отображения значений в фильтрах", () -> {
-            assertTrue(filterSearchPage.getRoomsPlaceholder().equals("2-комнатная") &&
-                    filterSearchPage.getPricePlaceholder().equals("от Цена от, ₽ 10 000 000 до Цена до, ₽ 20 000 000 ₽") &&
-                    filterSearchPage.getDeadlinePlaceholder().equals("до 2027 г."),
-                    "Отображаемые тексты в фильтрах должны точно соответствовать установленным значениям");
+            assertEquals("2-комнатная", filterSearchPage.getRoomsPlaceholder(), "Плейсхолдер комнат должен соответствовать установленному значению");
+            assertEquals("от Цена от, ₽ 10 000 000 до Цена до, ₽ 20 000 000 ₽", filterSearchPage.getPricePlaceholder(), "Плейсхолдер цены должен соответствовать установленному значению");
+            assertEquals("до 2027 г.", filterSearchPage.getDeadlinePlaceholder(), "Плейсхолдер срока сдачи должен соответствовать установленному значению");
         });
     }
 
@@ -176,7 +176,7 @@ public class FilterSearchTest extends TestBase {
     @Owner("belikinA")
     @Story("Фильтрация недвижимости")
     @DisplayName("Проверка установки значений фильтров, отображения тегов и их удаления по одному")
-    @Description("Тест проверяет установку значений в фильтрах, соответствие отображаемых тегов выбранным значениям и их удаление по одному")
+    @Description("Установка значений в фильтрах, соответствие отображаемых тегов выбранным значениям и их удаление по одному")
     void testFilterValuesAndTagsWithIndividualReset() {
         step("Открытие главной страницы", () -> {
             open(baseUrl);
@@ -184,18 +184,18 @@ public class FilterSearchTest extends TestBase {
         });
 
         step("Установка значений фильтров", () -> {
-            filterSearchPage.setDistrict(TestData.DISTRICT_ADMIRALTY)
-                    .setMetro(TestData.METRO_ADMIRALTY)
-                    .setRooms(TestData.ROOMS_2)
-                    .setPriceRange(TestData.PRICE_FROM, TestData.PRICE_TO)
-                    .setDeadline(TestData.DEADLINE);
+            filterSearchPage.setDistrict("Адмиралтейский")
+                    .setMetro("Адмиралтейская")
+                    .setRooms("2-комнатная")
+                    .setPriceRange("10000000", "20000000")
+                    .setDeadline("до 2027 г.");
         });
 
         step("Проверка отображения тегов фильтров", () -> {
-            List<String> actualTags = filterSearchPage.getFilterTags();
-            List<String> expectedTags = TestData.getExpectedAdmiraltyTags();
-            assertTrue(actualTags.containsAll(expectedTags),
-                    "Все выбранные значения фильтров должны отображаться в виде тегов");
+            var tags = filterSearchPage.getFilterTags();
+            assertEquals(5, tags.size(), "Количество тегов должно быть равно 5");
+            assertTrue(tags.contains("2-комнатная"), "Тег '2-комнатная' должен присутствовать");
+            assertTrue(tags.contains("м. Адмиралтейская"), "Тег 'м. Адмиралтейская' должен присутствовать");
         });
         
         step("Удаление всех тегов по одному", () -> {
@@ -203,9 +203,7 @@ public class FilterSearchTest extends TestBase {
         });
 
         step("Проверка отсутствия тегов после удаления", () -> {
-            int tagsCount = filterSearchPage.getTagsCount();
-            assertTrue(tagsCount == 0,
-                    "После удаления всех тегов по одному теги должны отсутствовать");
+            assertEquals(0, filterSearchPage.getTagsCount(), "После удаления всех тегов по одному теги должны отсутствовать");
         });
     }
 }

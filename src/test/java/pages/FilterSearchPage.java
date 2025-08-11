@@ -5,7 +5,7 @@ import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.*;
 
 public class FilterSearchPage {
 
@@ -62,57 +62,57 @@ public class FilterSearchPage {
     // Методы для работы с поиском
 
     public FilterSearchPage enterSearchText(String searchText) {
-        searchField.setValue(searchText);
+        searchField.shouldBe(visible, enabled).setValue(searchText);
         return this;
     }
 
     public FilterSearchPage clearSearch() {
-        clearSearchButton.click();
+        clearSearchButton.shouldBe(visible, enabled).click();
         return this;
     }
 
     public String getSearchText() {
-        return searchField.getValue();
+        return searchField.shouldBe(visible).getValue();
     }
 
     // Методы для работы с кнопками локации
 
     public FilterSearchPage clickDistrictButton() {
-        districtButton.click();
+        districtButton.shouldBe(visible, enabled).click();
         return this;
     }
 
     // Методы для работы с селектом количества комнат
 
     public FilterSearchPage openRoomsSelect() {
-        roomsSelect.click();
+        roomsSelect.shouldBe(visible, enabled).click();
         return this;
     }
 
     public String getRoomsPlaceholder() {
-        return roomsPlaceholder.text();
+        return roomsPlaceholder.shouldBe(visible).text();
     }
 
     // Методы для работы с селектом цены
 
     public FilterSearchPage openPriceSelect() {
-        priceSelect.click();
+        priceSelect.shouldBe(visible, enabled).click();
         return this;
     }
 
     public String getPricePlaceholder() {
-        return pricePlaceholder.text();
+        return pricePlaceholder.shouldBe(visible).text();
     }
 
     // Методы для работы с селектом срока сдачи
 
     public FilterSearchPage openDeadlineSelect() {
-        deadlineSelect.click();
+        deadlineSelect.shouldBe(visible, enabled).click();
         return this;
     }
 
     public String getDeadlinePlaceholder() {
-        return deadlinePlaceholder.text();
+        return deadlinePlaceholder.shouldBe(visible).text();
     }
 
     // Методы для установки значений фильтров
@@ -120,43 +120,43 @@ public class FilterSearchPage {
     public FilterSearchPage setDistrict(String district) {
         clickDistrictButton();
         
-        districtSearchInput.setValue(district);
+        districtSearchInput.shouldBe(visible, enabled).setValue(district);
         
-        firstDropdownItem.click();
+        firstDropdownItem.shouldBe(visible, enabled).click();
         
         return this;
     }
 
     public FilterSearchPage setMetro(String metro) {
-        metroButton.click();
+        metroButton.shouldBe(visible, enabled).click();
 
-        metroSearchInput.setValue(metro);
+        metroSearchInput.shouldBe(visible, enabled).setValue(metro);
 
-        metroSuggestion.click();
+        metroSuggestion.shouldBe(visible, enabled).click();
 
-        modalCloseButton.click();
+        modalCloseButton.shouldBe(visible, enabled).click();
 
         return this;
     }
 
     public FilterSearchPage setRooms(String rooms) {
         openRoomsSelect();
-        dropdownItems.findBy(text(rooms)).click();
+        dropdownItems.findBy(text(rooms)).shouldBe(visible, enabled).click();
         bodyElement.click();
         return this;
     }
 
     public FilterSearchPage setPriceRange(String priceFrom, String priceTo) {
         openPriceSelect();
-        priceFromInput.setValue(priceFrom);
-        priceToInput.setValue(priceTo);
+        priceFromInput.shouldBe(visible, enabled).setValue(priceFrom);
+        priceToInput.shouldBe(visible, enabled).setValue(priceTo);
         bodyElement.click();
         return this;
     }
 
     public FilterSearchPage setDeadline(String deadline) {
         openDeadlineSelect();
-        dropdownItems.get(3).click();
+        dropdownItems.get(3).shouldBe(visible, enabled).click();
         bodyElement.click();
         return this;
     }
@@ -184,7 +184,7 @@ public class FilterSearchPage {
     // Методы для работы с расширенными фильтрами
 
     public FilterSearchPage clickAllFiltersButton() {
-        allFiltersButton.click();
+        allFiltersButton.shouldBe(visible, enabled).click();
         return this;
     }
 
@@ -195,13 +195,13 @@ public class FilterSearchPage {
     // Методы для работы с кнопками сброса
 
     public FilterSearchPage clickResetAllButton() {
-        resetAllButton.click();
+        resetAllButton.shouldBe(visible, enabled).click();
         return this;
     }
 
     public FilterSearchPage removeAllTagsIndividually() {
         while (individualDeleteButtons.size() > 0) {
-            individualDeleteButtons.first().click();
+            individualDeleteButtons.first().shouldBe(visible, enabled).click();
         }
         return this;
     }
@@ -209,7 +209,7 @@ public class FilterSearchPage {
     // Вспомогательные методы
 
     private FilterSearchPage closeDropdown() {
-        modalCloseButton.click();
+        modalCloseButton.shouldBe(visible, enabled).click();
         return this;
     }
 }
