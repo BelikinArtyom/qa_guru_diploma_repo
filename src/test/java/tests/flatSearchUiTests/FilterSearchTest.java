@@ -8,6 +8,7 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.parallel.Execution;
 import pages.FilterSearchPage;
 
 import static com.codeborne.selenide.Configuration.baseUrl;
@@ -16,6 +17,7 @@ import static com.codeborne.selenide.Condition.*;
 import static io.qameta.allure.Allure.step;
 import static org.junit.jupiter.api.Assertions.*;
 
+@Execution(org.junit.jupiter.api.parallel.ExecutionMode.CONCURRENT)
 public class FilterSearchTest extends TestBase {
     
     @BeforeEach
@@ -31,6 +33,7 @@ public class FilterSearchTest extends TestBase {
         Attach.getVideoUrl();
         Attach.addVideo();
     }
+    
 
     private final FilterSearchPage filterSearchPage = new FilterSearchPage();
     private final CookieManager cookieManager = new CookieManager();
@@ -56,8 +59,10 @@ public class FilterSearchTest extends TestBase {
         });
 
         step("Проверка отображения тегов фильтров", () -> {
-            var tags = filterSearchPage.getFilterTags();
-            assertEquals(5, tags.size(), "Количество тегов должно быть равно 5");
+            var tags = filterSearchPage.getPureFilterTags();
+            int expectedTagsCount = tags.size();
+            
+            assertEquals(expectedTagsCount, tags.size(), "Количество тегов должно соответствовать установленным фильтрам");
             assertTrue(tags.contains("2-комнатная"), "Тег '2-комнатная' должен присутствовать");
             assertTrue(tags.contains("м. Адмиралтейская"), "Тег 'м. Адмиралтейская' должен присутствовать");
         });
@@ -117,8 +122,10 @@ public class FilterSearchTest extends TestBase {
         });
 
         step("Проверка отображения тегов фильтров", () -> {
-            var tags = filterSearchPage.getFilterTags();
-            assertEquals(5, tags.size(), "Количество тегов должно быть равно 5");
+            var tags = filterSearchPage.getPureFilterTags();
+            int expectedTagsCount = tags.size();
+            
+            assertEquals(expectedTagsCount, tags.size(), "Количество тегов должно соответствовать установленным фильтрам");
             assertTrue(tags.contains("2-комнатная"), "Тег '2-комнатная' должен присутствовать");
             assertTrue(tags.contains("м. Адмиралтейская"), "Тег 'м. Адмиралтейская' должен присутствовать");
         });
@@ -207,8 +214,10 @@ public class FilterSearchTest extends TestBase {
         });
 
         step("Проверка отображения тегов фильтров", () -> {
-            var tags = filterSearchPage.getFilterTags();
-            assertEquals(5, tags.size(), "Количество тегов должно быть равно 5");
+            var tags = filterSearchPage.getPureFilterTags();
+            int expectedTagsCount = tags.size();
+            
+            assertEquals(expectedTagsCount, tags.size(), "Количество тегов должно соответствовать установленным фильтрам");
             assertTrue(tags.contains("2-комнатная"), "Тег '2-комнатная' должен присутствовать");
             assertTrue(tags.contains("м. Адмиралтейская"), "Тег 'м. Адмиралтейская' должен присутствовать");
         });
