@@ -18,7 +18,7 @@ public class TestBase {
         Configuration.browser = BROWSER;
         Configuration.browserSize = BROWSER_SIZE;
         Configuration.baseUrl = "https://trendrealty.ru/";
-        Configuration.pageLoadStrategy = "eager";
+//        Configuration.pageLoadStrategy = "eager";
 
         Configuration.remote = String.format("https://%s:%s@%s/wd/hub",
         System.getProperty("selenoid_login", "user1"),
@@ -38,6 +38,6 @@ public class TestBase {
         Configuration.pollingInterval = 200; 
         Configuration.reportsFolder = "build/selenide-reports";
         
-        Configuration.fastSetValue = false; 
+        Configuration.fastSetValue = false;
     }
 }
