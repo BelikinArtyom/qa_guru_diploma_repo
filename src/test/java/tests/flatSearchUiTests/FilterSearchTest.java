@@ -1,12 +1,13 @@
 package tests.flatSearchUiTests;
 
+import com.codeborne.selenide.logevents.SelenideLogger;
+import helpers.Attach;
 import helpers.CookieManager;
 import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.*;
 import pages.FilterSearchPage;
 
 import static com.codeborne.selenide.Configuration.baseUrl;
@@ -16,6 +17,20 @@ import static io.qameta.allure.Allure.step;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FilterSearchTest extends TestBase {
+    
+    @BeforeEach
+    void allureListener() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
+    
+    @AfterEach
+    void attach() {
+        Attach.screenshotAs("Last screenshot");
+        Attach.pageSource();
+        Attach.browserConsoleLogs();
+        Attach.getVideoUrl();
+        Attach.addVideo();
+    }
 
     private final FilterSearchPage filterSearchPage = new FilterSearchPage();
     private final CookieManager cookieManager = new CookieManager();
