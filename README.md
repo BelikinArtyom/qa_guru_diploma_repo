@@ -143,7 +143,7 @@ allure report --export allure-report.zip
 
 ### После завершения сборки, бот автоматически отправляет сообщение с результатом выполнения тестов
 
-> **Здесь будет скриншот уведомления в Telegram**
+<img src="images/screens/allureUI.png" width="800" alt="Telegram">
 
 ---
 
