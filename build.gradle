@@ -73,3 +73,24 @@ task test_run (type: Test) {
         includeTags("Smoke")
     }
 }
+
+// Задачи для очистки Allure отчетов и результатов
+task cleanAllureResults(type: Delete) {
+    delete 'build/allure-results'
+    delete 'build/allure-report'
+    delete 'allure-results'
+    delete 'allure-report'
+    description = 'Удаляет все Allure результаты и отчеты'
+}
+
+task cleanAllureData(type: Delete) {
+    delete 'build/allure-results'
+    delete 'build/allure-report'
+    delete 'allure-results'
+    delete 'allure-report'
+    delete '.allure'
+    description = 'Удаляет все Allure данные включая кэш'
+}
+
+// Расширяем стандартную задачу clean
+clean.dependsOn cleanAllureResults
