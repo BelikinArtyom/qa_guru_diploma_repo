@@ -155,6 +155,10 @@ gradle-app.setting
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
+.idea
+
+allure-results
+
 ### Gradle Patch ###
 # Java heap dump
 *.hprof

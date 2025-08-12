@@ -108,15 +108,15 @@ gradle clean test -Dbrowser=chrome -Dselenoid_host=selenoid.autotests.cloud
 
 ### Главная страница Allure-отчета
 
-> **Здесь будет скриншот главной страницы Allure-отчета**
+<img src="images/screens/allureMain.png" width="800" alt="Allure Main Page">
 
 ### Пример отчета о выполнении тестов
 
-> **Здесь будет скриншот результатов выполнения тестов**
+<img src="images/screens/allureAll.png" width="800" alt="Allure Main Page">
 
 ### Детальная информация о тесте
 
-> **Здесь будет скриншот детальной информации о конкретном тесте**
+<img src="images/screens/allureRes.png" width="800" alt="Allure Main Page">
 
 ### Запуск Allure-отчета
 

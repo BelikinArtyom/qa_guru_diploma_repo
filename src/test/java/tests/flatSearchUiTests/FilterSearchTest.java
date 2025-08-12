@@ -1,5 +1,6 @@
 package tests.flatSearchUiTests;
 
+
 import helpers.Attach;
 import helpers.CookieManager;
 import io.qameta.allure.Description;
@@ -9,7 +10,6 @@ import pages.FilterSearchPage;
 
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.open;
-import static com.codeborne.selenide.Condition.*;
 import static io.qameta.allure.Allure.step;
 import static org.junit.jupiter.api.Assertions.*;
 
