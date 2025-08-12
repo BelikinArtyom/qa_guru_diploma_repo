@@ -1,7 +1,13 @@
 package tests.flatSearchUiTests;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.BeforeAll;
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+import java.util.Map;
+import java.util.UUID;
 
 public class TestBase {
 
@@ -16,20 +22,20 @@ public class TestBase {
         String selenoidLogin = System.getProperty("selenoid_login", "user1");
         String selenoidPassword = System.getProperty("selenoid_password", "1234");
         Configuration.baseUrl = "https://trendrealty.ru/";
-//        Configuration.remote = String.format("https://%s:%s@%s/wd/hub",
-//          selenoidLogin,
-//          selenoidPassword,
-//          selenoidHost);
-//        DesiredCapabilities capabilities = new DesiredCapabilities();
-//        capabilities.setCapability("selenoid:options", Map.of(
-//          "enableVNC", true,
-//          "enableVideo", true,
-//          "name", "Test: " + UUID.randomUUID()
-//        ));
-//        Configuration.browserCapabilities = capabilities;
+        Configuration.remote = String.format("https://%s:%s@%s/wd/hub",
+          selenoidLogin,
+          selenoidPassword,
+          selenoidHost);
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability("selenoid:options", Map.of(
+          "enableVNC", true,
+          "enableVideo", true,
+          "name", "Test: " + UUID.randomUUID()
+        ));
+        Configuration.browserCapabilities = capabilities;
 
-        // Добавляем AllureSelenide listener только один раз
-//        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
+
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
         
         Configuration.timeout = 10000;
         Configuration.pollingInterval = 200;
