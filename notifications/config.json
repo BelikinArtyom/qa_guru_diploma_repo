@@ -1,0 +1,18 @@
+{
+  "base": {
+    "project": "TeleNotifTest",
+    "environment": "dev",
+    "comment": "test comment",
+    "reportLink": "https://jenkins.autotests.cloud/job/belikinA_cv_Job_work/allure/",
+    "language": "en",
+    "allureFolder": "C:\\Users\\Bilop\\AppData\\Local\\Temp\\9989200815495292025\\allure-report",
+    "enableChart": true,
+    "enableSuitesPublishing": true,
+    "customData": {}
+  },
+  "telegram": {
+    "token": "7882373975:AAHVug1MvkBBOJ_mpMQcAyXQdTyNR2gRKoE",
+    "chat": "-1002889517578",
+    "templatePath": "/templates/telegram.ftl"
+  }
+}
