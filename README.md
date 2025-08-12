@@ -104,6 +104,12 @@ gradle clean test -Dbrowser=chrome -Dselenoid_host=selenoid.autotests.cloud
 
 ---
 
+## 📊 Запуск из Jenkins
+
+
+<img src="images/screens/jen.png" width="800" alt="Jenkins Main Page">
+
+
 ## 📊 Allure-отчет
 
 ### Главная страница Allure-отчета
@@ -112,11 +118,11 @@ gradle clean test -Dbrowser=chrome -Dselenoid_host=selenoid.autotests.cloud
 
 ### Пример отчета о выполнении тестов
 
-<img src="images/screens/allureAll.png" width="800" alt="Allure Main Page">
+<img src="images/screens/allureAll.png" width="800" alt="Allure test Page">
 
 ### Детальная информация о тесте
 
-<img src="images/screens/allureRes.png" width="800" alt="Allure Main Page">
+<img src="images/screens/allureRes.png" width="800" alt="Allure report Page">
 
 ### Запуск Allure-отчета
 
