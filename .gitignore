@@ -164,3 +164,6 @@ allure-results
 *.hprof
 
 # End of https://www.toptal.com/developers/gitignore/api/java,intellij,gradle
+
+# Gradle properties with sensitive data
+gradle.properties

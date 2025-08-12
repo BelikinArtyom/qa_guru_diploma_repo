@@ -1,0 +1,9 @@
+# Selenoid configuration template
+# Copy this file to gradle.properties and fill with your values
+selenoid.host=selenoid.autotests.cloud
+selenoid.login=your_login_here
+selenoid.password=your_password_here
+
+# Browser configuration
+browser=chrome
+browser.size=2560x1440

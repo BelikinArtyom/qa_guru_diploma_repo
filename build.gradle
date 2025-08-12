@@ -43,6 +43,13 @@ tasks.withType(JavaCompile) {
 tasks.withType(Test) {
     useJUnitPlatform()
 
+    // Передаем свойства из gradle.properties в тесты
+    systemProperty 'selenoid.host', project.findProperty('selenoid.host') ?: 'selenoid.autotests.cloud'
+    systemProperty 'selenoid.login', project.findProperty('selenoid.login') ?: 'user1'
+    systemProperty 'selenoid.password', project.findProperty('selenoid.password') ?: '1234'
+    systemProperty 'browser', project.findProperty('browser') ?: 'chrome'
+    systemProperty 'browser.size', project.findProperty('browser.size') ?: '2560x1440'
+
     testLogging {
         lifecycle {
             events "started", "skipped", "failed", "standard_error", "standard_out"
