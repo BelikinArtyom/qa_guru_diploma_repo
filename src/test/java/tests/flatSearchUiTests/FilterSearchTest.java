@@ -166,7 +166,7 @@ public class FilterSearchTest extends TestBase {
     @Story("Фильтрация недвижимости")
     @DisplayName("Проверка отображения установленных значений фильтров")
     @Description("Установка значений в фильтрах и соответствие отображаемого текста установленным значениям")
-    void testFilterValuesDisplay() {
+    void FilterValuesDisplayTest() {
         step("Открытие главной страницы", () -> {
             open(baseUrl);
             cookieManager.setCityForTest();
@@ -191,7 +191,7 @@ public class FilterSearchTest extends TestBase {
     @Story("Фильтрация недвижимости")
     @DisplayName("Проверка установки значений фильтров, отображения тегов и их удаления по одному")
     @Description("Установка значений в фильтрах, соответствие отображаемых тегов выбранным значениям и их удаление по одному")
-    void testFilterValuesAndTagsWithIndividualReset() {
+    void FilterValuesAndTagsWithIndividualResetTest() {
         step("Открытие главной страницы", () -> {
             open(baseUrl);
             cookieManager.setCityForTest();

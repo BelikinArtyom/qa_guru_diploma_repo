@@ -62,103 +62,86 @@ public class FilterSearchPage {
     private final ElementsCollection individualDeleteButtons = $$(".chips__delete .btn_clear, .chips__item .btn_clear");
 
     // Методы для работы с поиском
-
-    @Step("Ввод текста в поле поиска: {searchText}")
+    
     public FilterSearchPage enterSearchText(String searchText) {
         searchField.shouldBe(visible, enabled).setValue(searchText);
         return this;
     }
-
-    @Step("Очистка поля поиска")
+    
     public FilterSearchPage clearSearch() {
         clearSearchButton.shouldBe(visible, enabled).click();
         return this;
     }
 
-    @Step("Получение текста из поля поиска")
     public String getSearchText() {
         return searchField.shouldBe(visible).getValue();
     }
 
     // Методы для работы с кнопками локации
-
-    @Step("Клик по кнопке выбора района")
+    
     public FilterSearchPage clickDistrictButton() {
         districtButton.shouldBe(visible, enabled).click();
         return this;
     }
 
     // Методы для работы с селектом количества комнат
-
-    @Step("Открытие селекта количества комнат")
+    
     public FilterSearchPage openRoomsSelect() {
         roomsSelect.shouldBe(visible, enabled).click();
         return this;
     }
-
-    @Step("Получение плейсхолдера количества комнат")
+    
     public String getRoomsPlaceholder() {
         return roomsPlaceholder.shouldBe(visible).text();
     }
 
     // Методы для работы с селектом цены
-
-    @Step("Открытие селекта цены")
+    
     public FilterSearchPage openPriceSelect() {
         priceSelect.shouldBe(visible, enabled).click();
         return this;
     }
-
-    @Step("Получение плейсхолдера цены")
+    
     public String getPricePlaceholder() {
         return pricePlaceholder.shouldBe(visible).text();
     }
 
     // Методы для работы с селектом срока сдачи
-
-    @Step("Открытие селекта срока сдачи")
+    
     public FilterSearchPage openDeadlineSelect() {
         deadlineSelect.shouldBe(visible, enabled).click();
         return this;
     }
-
-    @Step("Получение плейсхолдера срока сдачи")
+    
     public String getDeadlinePlaceholder() {
         return deadlinePlaceholder.shouldBe(visible).text();
     }
-
+    
     // Методы для установки значений фильтров
-
-    @Step("Установка района: {district}")
+    
     public FilterSearchPage setDistrict(String district) {
         clickDistrictButton();
         firstDropdownItem.shouldBe(visible, enabled).click();
         districtSearchInput.shouldBe(visible, enabled).setValue(district);
         return this;
     }
-
-    @Step("Установка метро: {metro}")
+    
     public FilterSearchPage setMetro(String metro) {
         metroButton.shouldBe(visible, enabled).click();
-
         metroSearchInput.shouldBe(visible, enabled).setValue(metro);
-
         metroSuggestion.shouldBe(visible, enabled).click();
-
         modalCloseButton.shouldBe(visible, enabled).click();
 
         return this;
     }
-
-    @Step("Установка количества комнат: {rooms}")
+    
     public FilterSearchPage setRooms(String rooms) {
         openRoomsSelect();
         dropdownItems.findBy(text(rooms)).shouldBe(visible, enabled).click();
         bodyElement.click();
         return this;
     }
-
-    @Step("Установка диапазона цен: от {priceFrom} до {priceTo}")
+    
     public FilterSearchPage setPriceRange(String priceFrom, String priceTo) {
         openPriceSelect();
         priceFromInput.shouldBe(visible, enabled).setValue(priceFrom);
@@ -166,8 +149,7 @@ public class FilterSearchPage {
         bodyElement.click();
         return this;
     }
-
-    @Step("Установка срока сдачи: {deadline}")
+    
     public FilterSearchPage setDeadline(String deadline) {
         openDeadlineSelect();
         dropdownItems.get(3).shouldBe(visible, enabled).click();
@@ -176,8 +158,7 @@ public class FilterSearchPage {
     }
 
     // Методы для получения данных о тегах фильтров
-
-    @Step("Получение списка тегов фильтров")
+    
     public java.util.List<String> getFilterTags() {
         // Получаем все теги, исключая кнопку "Сбросить все"
         java.util.List<String> tags = new java.util.ArrayList<>();
@@ -204,24 +185,14 @@ public class FilterSearchPage {
         
         return filteredTags;
     }
-
-    @Step("Получение списка тегов фильтров (исключая кнопку 'Сбросить все')")
-    public java.util.List<String> getFilterTagsOnly() {
-        // Получаем только теги фильтров, исключая кнопку "Сбросить все"
-        java.util.List<String> allTags = getFilterTags();
-        allTags.removeIf(tag -> tag.equals("Сбросить все"));
-        return allTags;
-    }
-
-    @Step("Получение списка чистых тегов фильтров")
+    
     public java.util.List<String> getPureFilterTags() {
-        // Получаем только теги фильтров, исключая все служебные элементы
+
         java.util.List<String> tags = getFilterTags();
         
-        // Исключаем служебные элементы
         java.util.List<String> pureTags = new java.util.ArrayList<>();
         for (String tag : tags) {
-            // Исключаем кнопки и служебные элементы
+
             if (!tag.equals("Сбросить все") && 
                 !tag.contains("Сбросить") && 
                 !tag.trim().isEmpty() &&
@@ -232,10 +203,8 @@ public class FilterSearchPage {
         
         return pureTags;
     }
-
-    @Step("Получение количества тегов (исключая кнопку 'Сбросить все')")
+    
     public int getTagsCount() {
-        // Получаем количество тегов, исключая кнопку "Сбросить все"
         int totalTags = filterTagsForCount.size();
         if (resetAllChip.isDisplayed()) {
             totalTags--;
@@ -243,51 +212,28 @@ public class FilterSearchPage {
         return totalTags;
     }
 
-    @Step("Получение количества тегов фильтров")
-    public int getFilterTagsCount() {
-        // Получаем количество только тегов фильтров
-        return getFilterTags().size();
-    }
-
-    @Step("Получение количества чистых тегов фильтров")
-    public int getPureFilterTagsCount() {
-        // Получает количество только чистых тегов фильтров
-        return getPureFilterTags().size();
-    }
-
     // Методы для работы с расширенными фильтрами
-
-    @Step("Клик по кнопке 'Все фильтры'")
+    
     public FilterSearchPage clickAllFiltersButton() {
         allFiltersButton.shouldBe(visible, enabled).click();
         return this;
     }
-
-    @Step("Получение названий расширенных фильтров")
+    
     public java.util.List<String> getAllFilterNames() {
         return extendedFilterNames.texts();
     }
 
     // Методы для работы с кнопками сброса
-
-    @Step("Клик по кнопке 'Сбросить все'")
+    
     public FilterSearchPage clickResetAllButton() {
         resetAllButton.shouldBe(visible, enabled).click();
         return this;
     }
-
-    @Step("Удаление всех тегов по одному")
+    
     public FilterSearchPage removeAllTagsIndividually() {
         while (individualDeleteButtons.size() > 0) {
             individualDeleteButtons.first().shouldBe(visible, enabled).click();
         }
-        return this;
-    }
-
-    // Вспомогательные методы
-
-    private FilterSearchPage closeDropdown() {
-        modalCloseButton.shouldBe(visible, enabled).click();
         return this;
     }
 }

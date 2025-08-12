@@ -1,6 +1,16 @@
 # Проект по автоматизации UI-тестов для сервиса поиска недвижимости TrendRealty
 
-**Дипломная работа по автоматизации UI-тестирования**
+<p align="center">
+  <a href="https://trendrealty.ru/" target="_blank">
+    <img src="images/logo/logo1.png" width="200">
+  </a>
+</p>
+
+<p align="center">
+
+<p align="center">
+ Дипломная работа по автоматизации UI-тестирования
+<p align="center">
 
 ## Содержание
 
