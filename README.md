@@ -196,11 +196,3 @@ src/test/java/
 **Год**: 2025
 
 ---
-
-## 🔗 Полезные ссылки
-
-* [Selenide Documentation](https://selenide.org/)
-* [Allure Framework](https://docs.qameta.io/allure/)
-* [JUnit 5 User Guide](https://junit.org/junit5/docs/current/user-guide/)
-* [Gradle User Manual](https://docs.gradle.org/current/userguide/userguide.html)
-* [Selenoid Documentation](https://aerokube.com/selenoid/latest/)
