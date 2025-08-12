@@ -28,7 +28,7 @@ dependencies {
             "org.junit.jupiter:junit-jupiter:5.9.3",
             "com.github.javafaker:javafaker:1.0.2",
             "commons-io:commons-io:2.19.0",
-            'com.google.code.gson:gson:2.13.1',  // ✅ Оставляем только одну версию
+            'com.google.code.gson:gson:2.13.1',
             "com.opencsv:opencsv:5.11",
             'com.fasterxml.jackson.core:jackson-core:2.15.2',
             'com.fasterxml.jackson.core:jackson-annotations:2.15.2',

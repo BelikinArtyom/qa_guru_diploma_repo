@@ -2,6 +2,7 @@ package pages;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -62,22 +63,26 @@ public class FilterSearchPage {
 
     // Методы для работы с поиском
 
+    @Step("Ввод текста в поле поиска: {searchText}")
     public FilterSearchPage enterSearchText(String searchText) {
         searchField.shouldBe(visible, enabled).setValue(searchText);
         return this;
     }
 
+    @Step("Очистка поля поиска")
     public FilterSearchPage clearSearch() {
         clearSearchButton.shouldBe(visible, enabled).click();
         return this;
     }
 
+    @Step("Получение текста из поля поиска")
     public String getSearchText() {
         return searchField.shouldBe(visible).getValue();
     }
 
     // Методы для работы с кнопками локации
 
+    @Step("Клик по кнопке выбора района")
     public FilterSearchPage clickDistrictButton() {
         districtButton.shouldBe(visible, enabled).click();
         return this;
@@ -85,39 +90,46 @@ public class FilterSearchPage {
 
     // Методы для работы с селектом количества комнат
 
+    @Step("Открытие селекта количества комнат")
     public FilterSearchPage openRoomsSelect() {
         roomsSelect.shouldBe(visible, enabled).click();
         return this;
     }
 
+    @Step("Получение плейсхолдера количества комнат")
     public String getRoomsPlaceholder() {
         return roomsPlaceholder.shouldBe(visible).text();
     }
 
     // Методы для работы с селектом цены
 
+    @Step("Открытие селекта цены")
     public FilterSearchPage openPriceSelect() {
         priceSelect.shouldBe(visible, enabled).click();
         return this;
     }
 
+    @Step("Получение плейсхолдера цены")
     public String getPricePlaceholder() {
         return pricePlaceholder.shouldBe(visible).text();
     }
 
     // Методы для работы с селектом срока сдачи
 
+    @Step("Открытие селекта срока сдачи")
     public FilterSearchPage openDeadlineSelect() {
         deadlineSelect.shouldBe(visible, enabled).click();
         return this;
     }
 
+    @Step("Получение плейсхолдера срока сдачи")
     public String getDeadlinePlaceholder() {
         return deadlinePlaceholder.shouldBe(visible).text();
     }
 
     // Методы для установки значений фильтров
 
+    @Step("Установка района: {district}")
     public FilterSearchPage setDistrict(String district) {
         clickDistrictButton();
         
@@ -128,6 +140,7 @@ public class FilterSearchPage {
         return this;
     }
 
+    @Step("Установка метро: {metro}")
     public FilterSearchPage setMetro(String metro) {
         metroButton.shouldBe(visible, enabled).click();
 
@@ -140,6 +153,7 @@ public class FilterSearchPage {
         return this;
     }
 
+    @Step("Установка количества комнат: {rooms}")
     public FilterSearchPage setRooms(String rooms) {
         openRoomsSelect();
         dropdownItems.findBy(text(rooms)).shouldBe(visible, enabled).click();
@@ -147,6 +161,7 @@ public class FilterSearchPage {
         return this;
     }
 
+    @Step("Установка диапазона цен: от {priceFrom} до {priceTo}")
     public FilterSearchPage setPriceRange(String priceFrom, String priceTo) {
         openPriceSelect();
         priceFromInput.shouldBe(visible, enabled).setValue(priceFrom);
@@ -155,6 +170,7 @@ public class FilterSearchPage {
         return this;
     }
 
+    @Step("Установка срока сдачи: {deadline}")
     public FilterSearchPage setDeadline(String deadline) {
         openDeadlineSelect();
         dropdownItems.get(3).shouldBe(visible, enabled).click();
@@ -164,6 +180,7 @@ public class FilterSearchPage {
 
     // Методы для получения данных о тегах фильтров
 
+    @Step("Получение списка тегов фильтров")
     public java.util.List<String> getFilterTags() {
         // Получаем все теги, исключая кнопку "Сбросить все"
         java.util.List<String> tags = new java.util.ArrayList<>();
@@ -191,6 +208,7 @@ public class FilterSearchPage {
         return filteredTags;
     }
 
+    @Step("Получение списка тегов фильтров (исключая кнопку 'Сбросить все')")
     public java.util.List<String> getFilterTagsOnly() {
         // Получаем только теги фильтров, исключая кнопку "Сбросить все"
         java.util.List<String> allTags = getFilterTags();
@@ -198,6 +216,7 @@ public class FilterSearchPage {
         return allTags;
     }
 
+    @Step("Получение списка чистых тегов фильтров")
     public java.util.List<String> getPureFilterTags() {
         // Получаем только теги фильтров, исключая все служебные элементы
         java.util.List<String> tags = getFilterTags();
@@ -217,6 +236,7 @@ public class FilterSearchPage {
         return pureTags;
     }
 
+    @Step("Получение количества тегов (исключая кнопку 'Сбросить все')")
     public int getTagsCount() {
         // Получаем количество тегов, исключая кнопку "Сбросить все"
         int totalTags = filterTagsForCount.size();
@@ -226,11 +246,13 @@ public class FilterSearchPage {
         return totalTags;
     }
 
+    @Step("Получение количества тегов фильтров")
     public int getFilterTagsCount() {
         // Получаем количество только тегов фильтров
         return getFilterTags().size();
     }
 
+    @Step("Получение количества чистых тегов фильтров")
     public int getPureFilterTagsCount() {
         // Получает количество только чистых тегов фильтров
         return getPureFilterTags().size();
@@ -238,22 +260,26 @@ public class FilterSearchPage {
 
     // Методы для работы с расширенными фильтрами
 
+    @Step("Клик по кнопке 'Все фильтры'")
     public FilterSearchPage clickAllFiltersButton() {
         allFiltersButton.shouldBe(visible, enabled).click();
         return this;
     }
 
+    @Step("Получение названий расширенных фильтров")
     public java.util.List<String> getAllFilterNames() {
         return extendedFilterNames.texts();
     }
 
     // Методы для работы с кнопками сброса
 
+    @Step("Клик по кнопке 'Сбросить все'")
     public FilterSearchPage clickResetAllButton() {
         resetAllButton.shouldBe(visible, enabled).click();
         return this;
     }
 
+    @Step("Удаление всех тегов по одному")
     public FilterSearchPage removeAllTagsIndividually() {
         while (individualDeleteButtons.size() > 0) {
             individualDeleteButtons.first().shouldBe(visible, enabled).click();

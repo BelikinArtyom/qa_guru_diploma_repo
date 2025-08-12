@@ -18,7 +18,7 @@ public class TestBase {
         Configuration.browser = BROWSER;
         Configuration.browserSize = BROWSER_SIZE;
         Configuration.baseUrl = "https://trendrealty.ru/";
-       // Configuration.pageLoadStrategy = "eager";
+      
 
 
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
