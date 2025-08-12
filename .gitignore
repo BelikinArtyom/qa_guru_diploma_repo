@@ -159,6 +159,8 @@ gradle-app.setting
 
 allure-results
 
+.vscode
+
 ### Gradle Patch ###
 # Java heap dump
 *.hprof
