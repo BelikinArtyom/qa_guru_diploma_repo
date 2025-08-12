@@ -17,8 +17,21 @@ public class TestBase {
         String BROWSER_SIZE = System.getProperty("browser.size", "2560x1440");
         Configuration.browser = BROWSER;
         Configuration.browserSize = BROWSER_SIZE;
+        String selenoidHost = System.getProperty("selenoid_host", "selenoid.autotests.cloud");
+        String selenoidLogin = System.getProperty("selenoid_login", "user1");
+        String selenoidPassword = System.getProperty("selenoid_password", "1234");
         Configuration.baseUrl = "https://trendrealty.ru/";
-      
+        Configuration.remote = String.format("https://%s:%s@%s/wd/hub",
+          selenoidLogin,
+          selenoidPassword,
+          selenoidHost);
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability("selenoid:options", Map.of(
+          "enableVNC", true,
+          "enableVideo", true,
+          "name", "Test: " + UUID.randomUUID()
+        ));
+        Configuration.browserCapabilities = capabilities;
 
 
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
