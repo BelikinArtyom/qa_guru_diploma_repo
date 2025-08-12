@@ -32,7 +32,7 @@ public class FilterSearchTest extends TestBase {
     @Owner("belikinA")
     @DisplayName("Проверка установки значений фильтров и отображения тегов")
     @Description("Установка значений в фильтрах и соответствие отображаемых тегов выбранным значениям")
-    void filterValuesAndTagsTest() {
+    void filterValuesAndTagsTests() {
         step("Открытие главной страницы", () -> {
             open(baseUrl);
             cookieManager.setCityForTest();
