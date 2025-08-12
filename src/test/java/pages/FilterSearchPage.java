@@ -45,7 +45,7 @@ public class FilterSearchPage {
     private final SelenideElement bodyElement = $("body");
 
     // Элементы для работы с тегами
-    private final ElementsCollection filterBottomTags = $$(".filter__bottom .tag");
+    private final ElementsCollection filterBottomTags = $$(".chips__item.chips__item_black");
     private final ElementsCollection filterTags = $$(".filter-tags .tag");
     private final ElementsCollection allTags = $$(".tag");
     private final ElementsCollection anyTagElements = $$("[class*='tag']");

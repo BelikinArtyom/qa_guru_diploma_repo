@@ -18,20 +18,9 @@ public class TestBase {
         Configuration.browser = BROWSER;
         Configuration.browserSize = BROWSER_SIZE;
         Configuration.baseUrl = "https://trendrealty.ru/";
-//        Configuration.pageLoadStrategy = "eager";
+       // Configuration.pageLoadStrategy = "eager";
 
-        Configuration.remote = String.format("https://%s:%s@%s/wd/hub",
-        System.getProperty("selenoid_login", "user1"),
-        System.getProperty("selenoid_password", "1234"),
-        System.getProperty("selenoid_host", "selenoid.autotests.cloud"));
 
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("selenoid:options", Map.of(
-                "enableVNC", true,
-                "enableVideo", true,
-                "name", "Test: " + UUID.randomUUID()
-        ));
-        Configuration.browserCapabilities = capabilities;
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
         
         Configuration.timeout = 10000;
