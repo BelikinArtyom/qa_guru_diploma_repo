@@ -33,7 +33,7 @@ public class TestBase {
         ));
         Configuration.browserCapabilities = capabilities;
 
-
+        // Добавляем AllureSelenide listener только один раз
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
         
         Configuration.timeout = 10000;

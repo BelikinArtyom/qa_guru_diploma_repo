@@ -57,7 +57,17 @@ tasks.withType(Test) {
     systemProperty 'junit.jupiter.execution.parallel.mode.methods.default', 'concurrent'
     systemProperty 'junit.jupiter.execution.parallel.config.strategy', 'fixed'
     systemProperty 'junit.jupiter.execution.parallel.config.fixed.parallelism', '4'
+    
+    // Настройки Allure для Jenkins
+    systemProperty 'allure.results.directory', 'build/allure-results'
+    systemProperty 'allure.attachments.include', 'true'
+    systemProperty 'allure.attachments.include.console', 'false'
+    systemProperty 'allure.attachments.include.selenide', 'true'
+    systemProperty 'allure.attachments.include.selenide.steps', 'false'
+    systemProperty 'allure.attachments.include.selenide.actions', 'false'
+    systemProperty 'allure.attachments.include.selenide.conditions', 'false'
 }
+
 task test_run (type: Test) {
     useJUnitPlatform {
         includeTags("Smoke")
