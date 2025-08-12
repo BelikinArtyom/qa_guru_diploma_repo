@@ -19,7 +19,6 @@ public class TestBase {
         Configuration.browser = BROWSER;
         Configuration.browserSize = BROWSER_SIZE;
         
-        // Читаем из системных свойств (передаются через gradle или Jenkins)
         String selenoidHost = System.getProperty("selenoid.host");
         String selenoidLogin = System.getProperty("selenoid.login");
         String selenoidPassword = System.getProperty("selenoid.password");
@@ -35,8 +34,7 @@ public class TestBase {
           "name", "Test: " + UUID.randomUUID()
         ));
         Configuration.browserCapabilities = capabilities;
-
-
+        
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
         
         Configuration.timeout = 10000;
