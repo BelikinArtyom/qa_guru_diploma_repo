@@ -4,7 +4,6 @@ import helpers.Attach;
 import helpers.CookieManager;
 import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
-import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
 import pages.FilterSearchPage;
 
@@ -31,7 +30,6 @@ public class FilterSearchTest extends TestBase {
     @Test
     @Tag("Smoke")
     @Owner("belikinA")
-    @Story("Фильтрация недвижимости")
     @DisplayName("Проверка установки значений фильтров и отображения тегов")
     @Description("Установка значений в фильтрах и соответствие отображаемых тегов выбранным значениям")
     void filterValuesAndTagsTest() {
@@ -58,7 +56,6 @@ public class FilterSearchTest extends TestBase {
     @Test
     @Tag("Smoke")
     @Owner("belikinA")
-    @Story("Расширенные фильтры")
     @DisplayName("Проверка открытия расширенных фильтров и их названий")
     @Description("Открытие расширенных фильтров и соответствие названий фильтров ожидаемым значениям")
     void extendedFiltersTest() {
@@ -91,7 +88,6 @@ public class FilterSearchTest extends TestBase {
     @Test
     @Tag("Smoke")
     @Owner("belikinA")
-    @Story("Фильтрация недвижимости")
     @DisplayName("Проверка установки значений фильтров, отображения тегов и их сброса")
     @Description("Установка значений в фильтрах, соответствие отображаемых тегов выбранным значениям и их удаление")
     void filterValuesAndTagsWithResetTest() {
@@ -127,7 +123,6 @@ public class FilterSearchTest extends TestBase {
     @Test
     @Tag("Smoke")
     @Owner("belikinA")
-    @Story("Поиск недвижимости")
     @DisplayName("Проверка ввода текста в поле поиска и его очистки")
     @Description("Ввод текста в поле поиска, его получение и очистка через кнопку крестика")
     void searchFieldClearTest() {
@@ -156,7 +151,6 @@ public class FilterSearchTest extends TestBase {
     @Test
     @Tag("Smoke")
     @Owner("belikinA")
-    @Story("Фильтрация недвижимости")
     @DisplayName("Проверка отображения установленных значений фильтров")
     @Description("Установка значений в фильтрах и соответствие отображаемого текста установленным значениям")
     void FilterValuesDisplayTest() {
@@ -181,7 +175,6 @@ public class FilterSearchTest extends TestBase {
     @Test
     @Tag("Smoke")
     @Owner("belikinA")
-    @Story("Фильтрация недвижимости")
     @DisplayName("Проверка установки значений фильтров, отображения тегов и их удаления по одному")
     @Description("Установка значений в фильтрах, соответствие отображаемых тегов выбранным значениям и их удаление по одному")
     void FilterValuesAndTagsWithIndividualResetTest() {
