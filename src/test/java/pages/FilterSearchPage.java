@@ -132,11 +132,8 @@ public class FilterSearchPage {
     @Step("Установка района: {district}")
     public FilterSearchPage setDistrict(String district) {
         clickDistrictButton();
-        
-        districtSearchInput.shouldBe(visible, enabled).setValue(district);
-        
         firstDropdownItem.shouldBe(visible, enabled).click();
-        
+        districtSearchInput.shouldBe(visible, enabled).setValue(district);
         return this;
     }
 
