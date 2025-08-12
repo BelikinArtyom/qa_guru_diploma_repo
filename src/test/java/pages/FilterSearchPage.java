@@ -57,6 +57,7 @@ public class FilterSearchPage {
 
     // Элементы для работы с кнопками сброса
     private final SelenideElement resetAllButton = $(".chips__delete-all button");
+    private final SelenideElement resetAllChip = $(".chips__delete-all");
     private final ElementsCollection individualDeleteButtons = $$(".chips__delete .btn_clear, .chips__item .btn_clear");
 
     // Методы для работы с поиском
@@ -164,21 +165,75 @@ public class FilterSearchPage {
     // Методы для получения данных о тегах фильтров
 
     public java.util.List<String> getFilterTags() {
-        java.util.List<String> tags = filterBottomTags.texts();
-        if (tags.isEmpty()) {
+        // Получаем все теги, исключая кнопку "Сбросить все"
+        java.util.List<String> tags = new java.util.ArrayList<>();
+        
+        // Пробуем разные селекторы по приоритету
+        if (!filterBottomTags.isEmpty()) {
+            tags = filterBottomTags.texts();
+        } else if (!filterTags.isEmpty()) {
             tags = filterTags.texts();
-        }
-        if (tags.isEmpty()) {
+        } else if (!allTags.isEmpty()) {
             tags = allTags.texts();
-        }
-        if (tags.isEmpty()) {
+        } else if (!anyTagElements.isEmpty()) {
             tags = anyTagElements.texts();
         }
-        return tags;
+        
+        // Фильтруем теги, исключая служебные элементы
+        java.util.List<String> filteredTags = new java.util.ArrayList<>();
+        for (String tag : tags) {
+            // Исключаем кнопку "Сбросить все" и пустые строки
+            if (!tag.equals("Сбросить все") && !tag.trim().isEmpty()) {
+                filteredTags.add(tag);
+            }
+        }
+        
+        return filteredTags;
+    }
+
+    public java.util.List<String> getFilterTagsOnly() {
+        // Получаем только теги фильтров, исключая кнопку "Сбросить все"
+        java.util.List<String> allTags = getFilterTags();
+        allTags.removeIf(tag -> tag.equals("Сбросить все"));
+        return allTags;
+    }
+
+    public java.util.List<String> getPureFilterTags() {
+        // Получаем только теги фильтров, исключая все служебные элементы
+        java.util.List<String> tags = getFilterTags();
+        
+        // Исключаем служебные элементы
+        java.util.List<String> pureTags = new java.util.ArrayList<>();
+        for (String tag : tags) {
+            // Исключаем кнопки и служебные элементы
+            if (!tag.equals("Сбросить все") && 
+                !tag.contains("Сбросить") && 
+                !tag.trim().isEmpty() &&
+                !tag.matches(".*[Кк]нопка.*")) {
+                pureTags.add(tag);
+            }
+        }
+        
+        return pureTags;
     }
 
     public int getTagsCount() {
-        return filterTagsForCount.size();
+        // Получаем количество тегов, исключая кнопку "Сбросить все"
+        int totalTags = filterTagsForCount.size();
+        if (resetAllChip.isDisplayed()) {
+            totalTags--;
+        }
+        return totalTags;
+    }
+
+    public int getFilterTagsCount() {
+        // Получаем количество только тегов фильтров
+        return getFilterTags().size();
+    }
+
+    public int getPureFilterTagsCount() {
+        // Получает количество только чистых тегов фильтров
+        return getPureFilterTags().size();
     }
 
     // Методы для работы с расширенными фильтрами
