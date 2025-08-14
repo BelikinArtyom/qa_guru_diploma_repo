@@ -34,8 +34,8 @@ public class FilterSearchTest extends TestBase {
     @Description("Установка значений в фильтрах и соответствие отображаемых тегов выбранным значениям")
     void filterValuesAndTagsTests() {
         step("Открытие главной страницы", () -> {
-            open(baseUrl);
             cookieManager.setCityForTest();
+            open(baseUrl);
         });
 
         step("Установка значений фильтров", () -> {
@@ -60,8 +60,8 @@ public class FilterSearchTest extends TestBase {
     @Description("Открытие расширенных фильтров и соответствие названий фильтров ожидаемым значениям")
     void extendedFiltersTest() {
         step("Открытие главной страницы", () -> {
-            open(baseUrl);
             cookieManager.setCityForTest();
+            open(baseUrl);
         });
 
         step("Открытие расширенных фильтров", () -> {
@@ -92,8 +92,8 @@ public class FilterSearchTest extends TestBase {
     @Description("Установка значений в фильтрах, соответствие отображаемых тегов выбранным значениям и их удаление")
     void filterValuesAndTagsWithResetTest() {
         step("Открытие главной страницы", () -> {
-            open(baseUrl);
             cookieManager.setCityForTest();
+            open(baseUrl);
         });
 
         step("Установка значений фильтров", () -> {
@@ -126,8 +126,8 @@ public class FilterSearchTest extends TestBase {
     @Description("Ввод текста в поле поиска, его получение и очистка через кнопку крестика")
     void searchFieldClearTest() {
         step("Открытие главной страницы", () -> {
-            open(baseUrl);
             cookieManager.setCityForTest();
+            open(baseUrl);
         });
 
         step("Ввод текста в поле поиска", () -> {
@@ -154,8 +154,8 @@ public class FilterSearchTest extends TestBase {
     @Description("Установка значений в фильтрах и соответствие отображаемого текста установленным значениям")
     void FilterValuesDisplayTest() {
         step("Открытие главной страницы", () -> {
-            open(baseUrl);
             cookieManager.setCityForTest();
+            open(baseUrl);
         });
 
         step("Установка значений фильтров", () -> {
@@ -178,8 +178,8 @@ public class FilterSearchTest extends TestBase {
     @Description("Установка значений в фильтрах, соответствие отображаемых тегов выбранным значениям и их удаление по одному")
     void FilterValuesAndTagsWithIndividualResetTest() {
         step("Открытие главной страницы", () -> {
-            open(baseUrl);
             cookieManager.setCityForTest();
+            open(baseUrl);
         });
 
         step("Установка значений фильтров", () -> {
